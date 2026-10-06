@@ -92,16 +92,25 @@ Back up first: `safeboot` serves the whole 4 MB flash at `/flash.bin`.
 
 ## Getting started
 
+### Which file do I flash?
+
+| File (from [Releases](https://github.com/irsin78/geekmagictv/releases)) | |
+|---|---|
+| `smalltv-usagebar-*.bin` | **The display firmware. This is the one you need.** Upload it at the device's `/update` page. |
+| `smalltv-safeboot-*.bin` | Optional. A rescue/diagnostics firmware, used once to back up the stock firmware before installing (step 2 below), or to recover later. |
+
+The release files contain no passwords or tokens.
+
 ### Option A: prebuilt firmware (no build tools needed)
 
-1. Download `smalltv-usagebar-*.bin` (and, recommended, `smalltv-safeboot-*.bin`) from
-   [Releases](https://github.com/irsin78/geekmagictv/releases). The release files contain no
-   passwords or tokens.
+1. Download `smalltv-usagebar-*.bin` (and, for the backup, `smalltv-safeboot-*.bin`) from
+   [Releases](https://github.com/irsin78/geekmagictv/releases).
 2. **Back up the stock firmware (recommended).** On the stock firmware's page `http://<device>/update`,
    upload `smalltv-safeboot-*.bin`. After it restarts, join the open Wi-Fi **SmallTV-Safe** and download
    `http://192.168.4.1/flash.bin` (the whole 4 MB flash). Then upload `smalltv-usagebar-*.bin` at
-   `http://192.168.4.1/update`. Skipping the backup? Upload `smalltv-usagebar-*.bin` directly on the
-   stock `/update` page.
+   `http://192.168.4.1/update` using the **Firmware** field (never the FileSystem field: it would erase
+   the stock data). Skipping the backup? Upload `smalltv-usagebar-*.bin` directly on the stock
+   `/update` page.
 3. **Wi-Fi setup.** The display shows *Wi-Fi setup*. Join the open Wi-Fi **SmallTV-Setup** with a
    phone or computer. The setup page opens by itself (or go to `http://192.168.4.1`). Press *Find
    networks*, pick your Wi-Fi, enter its password and connect. The display restarts, joins your Wi-Fi
@@ -151,7 +160,8 @@ current image is large, upload a smaller one (e.g. `safeboot`) first. See the si
 
 - Usage comes from the services' internal endpoints and CLI commands (the same ones tools like
   CodexBar use), not documented public APIs. They may change.
-- Polling `api.anthropic.com/api/oauth/usage` every minute triggered HTTP 429. Five minutes is fine.
+- The usage endpoints rate-limit (polling every minute got HTTP 429), so each service is queried at most
+  every 5 minutes and backs off after errors.
 - The mascot and weather pixel art was drawn by the Codex CLI on request (`tools/icons/*.json`).
   Clawd was seeded from Claude Code's welcome-banner block characters.
 
