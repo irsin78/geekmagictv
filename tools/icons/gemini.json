@@ -1,0 +1,358 @@
+{
+  "palette": {
+    "B": "#3984FF",
+    "H": "#D6F0FF",
+    "P": "#9A7BFF",
+    "L": "#67B7FF",
+    "D": "#243D75",
+    "W": "#FFFFFF"
+  },
+  "poses": {
+    "spin0": [
+      ".....BB.....",
+      ".....BB.....",
+      "....BBBB....",
+      "....BBBL....",
+      "..BBBBLLPP..",
+      "BBBBBHHLPPPP",
+      "BBBBLHHLPPPP",
+      "..BLLLLLPP..",
+      "....LLLL....",
+      "....LLLL....",
+      ".....LL.....",
+      ".....LL....."
+    ],
+    "spin1": [
+      "........B...",
+      ".......B....",
+      "......BB....",
+      "B...BBBL....",
+      ".BBBBBHLP...",
+      "..BBHHHLP...",
+      "...BLHHHPP..",
+      "...LLHLLPPP.",
+      "....LLLL...P",
+      "....LL......",
+      "....L.......",
+      "...L........"
+    ],
+    "spin2": [
+      "B........P",
+      ".B......P.",
+      "..BBBBLP..",
+      "..BBBLLP..",
+      "..BBHHLP..",
+      "..BLHHLP..",
+      "..LLLLLP..",
+      "..LLLLLP..",
+      ".L......P.",
+      "L........P"
+    ],
+    "spin3": [
+      "...B........",
+      "....B.......",
+      "....BB......",
+      "....BBBL...P",
+      "...BBHLLPPP.",
+      "...BBHHHPP..",
+      "..BBHHHLP...",
+      ".BBLLLHLP...",
+      "B...LLLL....",
+      "......LL....",
+      ".......L....",
+      "........P..."
+    ],
+    "grow": [
+      "......BB......",
+      "......BB......",
+      ".....BBBB.....",
+      ".....BBBL.....",
+      "....BBBBLL....",
+      "..BBBBBHLLPP..",
+      "BBBBBBHWHLPPPP",
+      "BBBBBLHWHLPPPP",
+      "..BLLHHLLLPP..",
+      "....LLLLLL....",
+      ".....LLLL.....",
+      ".....LLLL.....",
+      "......LL......",
+      "......LL......"
+    ],
+    "small": [
+      "...BB...",
+      "...BL...",
+      "..BBLP..",
+      "BBBHLPPP",
+      "BBLH LPP",
+      "..LLLP..",
+      "...LL...",
+      "...LL..."
+    ],
+    "glint": [
+      ".H.",
+      "HWH",
+      ".H."
+    ],
+    "sparkle": [
+      "..L..",
+      "..H..",
+      "LHWHL",
+      "..H..",
+      "..L.."
+    ],
+    "trail": [
+      "...DLLLL",
+      "DDLLHHHH",
+      "...DPPPP"
+    ],
+    "fade": [
+      "......DD",
+      "D.DDDDDD",
+      "......DD"
+    ]
+  },
+  "sequences": [
+    {
+      "name": "spin",
+      "frames": [
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin1", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin2", "x": 15, "y": 6, "flip": false}],
+        [{"pose": "spin3", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin1", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin2", "x": 15, "y": 6, "flip": false}],
+        [{"pose": "spin3", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}]
+      ]
+    },
+    {
+      "name": "sway",
+      "frames": [
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin1", "x": 12, "y": 5, "flip": false}],
+        [{"pose": "spin2", "x": 11, "y": 7, "flip": false}],
+        [{"pose": "spin3", "x": 8, "y": 6, "flip": false}],
+        [{"pose": "spin0", "x": 7, "y": 6, "flip": false}],
+        [{"pose": "spin1", "x": 8, "y": 6, "flip": false}],
+        [{"pose": "spin2", "x": 11, "y": 7, "flip": false}],
+        [{"pose": "spin3", "x": 12, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin1", "x": 17, "y": 4, "flip": false}],
+        [{"pose": "spin2", "x": 21, "y": 5, "flip": false}],
+        [{"pose": "spin3", "x": 21, "y": 4, "flip": false}],
+        [{"pose": "spin0", "x": 20, "y": 4, "flip": false}],
+        [{"pose": "spin1", "x": 18, "y": 4, "flip": false}],
+        [{"pose": "spin3", "x": 16, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}]
+      ]
+    },
+    {
+      "name": "twinkle",
+      "frames": [
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [
+          {"pose": "spin0", "x": 14, "y": 5, "flip": false},
+          {"pose": "glint", "x": 10, "y": 3, "flip": false}
+        ],
+        [
+          {"pose": "spin1", "x": 14, "y": 5, "flip": false},
+          {"pose": "sparkle", "x": 9, "y": 2, "flip": false}
+        ],
+        [
+          {"pose": "spin1", "x": 14, "y": 5, "flip": false},
+          {"pose": "glint", "x": 10, "y": 3, "flip": false},
+          {"pose": "glint", "x": 28, "y": 7, "flip": false}
+        ],
+        [
+          {"pose": "spin2", "x": 15, "y": 6, "flip": false},
+          {"pose": "sparkle", "x": 27, "y": 6, "flip": false}
+        ],
+        [
+          {"pose": "spin2", "x": 15, "y": 6, "flip": false},
+          {"pose": "glint", "x": 28, "y": 7, "flip": false}
+        ],
+        [{"pose": "spin3", "x": 14, "y": 5, "flip": false}],
+        [
+          {"pose": "spin0", "x": 14, "y": 5, "flip": false},
+          {"pose": "glint", "x": 12, "y": 17, "flip": false}
+        ],
+        [
+          {"pose": "spin0", "x": 14, "y": 5, "flip": false},
+          {"pose": "sparkle", "x": 11, "y": 16, "flip": false},
+          {"pose": "glint", "x": 25, "y": 2, "flip": false}
+        ],
+        [
+          {"pose": "spin0", "x": 14, "y": 5, "flip": false},
+          {"pose": "glint", "x": 12, "y": 17, "flip": false},
+          {"pose": "sparkle", "x": 24, "y": 1, "flip": false}
+        ],
+        [
+          {"pose": "spin1", "x": 14, "y": 5, "flip": false},
+          {"pose": "glint", "x": 25, "y": 2, "flip": false}
+        ],
+        [
+          {"pose": "spin2", "x": 15, "y": 6, "flip": false},
+          {"pose": "glint", "x": 8, "y": 10, "flip": false},
+          {"pose": "glint", "x": 28, "y": 16, "flip": false}
+        ],
+        [
+          {"pose": "spin3", "x": 14, "y": 5, "flip": false},
+          {"pose": "sparkle", "x": 7, "y": 9, "flip": false},
+          {"pose": "sparkle", "x": 27, "y": 15, "flip": false}
+        ],
+        [
+          {"pose": "spin0", "x": 14, "y": 5, "flip": false},
+          {"pose": "glint", "x": 8, "y": 10, "flip": false},
+          {"pose": "glint", "x": 28, "y": 16, "flip": false}
+        ],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}]
+      ]
+    },
+    {
+      "name": "orbit",
+      "frames": [
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin1", "x": 17, "y": 5, "flip": false}],
+        [{"pose": "spin2", "x": 21, "y": 5, "flip": false}],
+        [{"pose": "spin3", "x": 22, "y": 3, "flip": false}],
+        [{"pose": "spin0", "x": 21, "y": 1, "flip": false}],
+        [{"pose": "spin1", "x": 18, "y": 0, "flip": false}],
+        [{"pose": "spin2", "x": 15, "y": 1, "flip": false}],
+        [{"pose": "spin3", "x": 10, "y": 0, "flip": false}],
+        [{"pose": "spin0", "x": 7, "y": 1, "flip": false}],
+        [{"pose": "spin1", "x": 6, "y": 3, "flip": false}],
+        [{"pose": "spin2", "x": 7, "y": 6, "flip": false}],
+        [{"pose": "spin3", "x": 7, "y": 7, "flip": false}],
+        [{"pose": "spin0", "x": 10, "y": 9, "flip": false}],
+        [{"pose": "spin1", "x": 14, "y": 10, "flip": false}],
+        [{"pose": "spin2", "x": 19, "y": 10, "flip": false}],
+        [{"pose": "spin3", "x": 21, "y": 7, "flip": false}],
+        [{"pose": "spin0", "x": 22, "y": 5, "flip": false}],
+        [{"pose": "spin1", "x": 19, "y": 5, "flip": false}],
+        [{"pose": "spin3", "x": 16, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}]
+      ]
+    },
+    {
+      "name": "shooting_star",
+      "frames": [
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin3", "x": 12, "y": 6, "flip": false}],
+        [{"pose": "spin2", "x": 10, "y": 7, "flip": false}],
+        [{"pose": "spin1", "x": 6, "y": 6, "flip": false}],
+        [{"pose": "spin0", "x": 2, "y": 6, "flip": false}],
+        [{"pose": "spin3", "x": 0, "y": 6, "flip": false}],
+        [
+          {"pose": "trail", "x": -4, "y": 10, "flip": false},
+          {"pose": "spin0", "x": 4, "y": 5, "flip": false}
+        ],
+        [
+          {"pose": "fade", "x": -4, "y": 10, "flip": false},
+          {"pose": "trail", "x": 3, "y": 9, "flip": false},
+          {"pose": "spin1", "x": 11, "y": 4, "flip": false}
+        ],
+        [
+          {"pose": "fade", "x": 3, "y": 9, "flip": false},
+          {"pose": "trail", "x": 11, "y": 8, "flip": false},
+          {"pose": "spin2", "x": 20, "y": 4, "flip": false}
+        ],
+        [
+          {"pose": "fade", "x": 11, "y": 8, "flip": false},
+          {"pose": "trail", "x": 19, "y": 7, "flip": false},
+          {"pose": "spin3", "x": 27, "y": 2, "flip": false}
+        ],
+        [
+          {"pose": "fade", "x": 19, "y": 7, "flip": false},
+          {"pose": "trail", "x": 26, "y": 7, "flip": false},
+          {"pose": "spin0", "x": 34, "y": 2, "flip": false}
+        ],
+        [
+          {"pose": "fade", "x": 26, "y": 7, "flip": false},
+          {"pose": "trail", "x": 31, "y": 7, "flip": false},
+          {"pose": "spin1", "x": 39, "y": 2, "flip": false}
+        ],
+        [
+          {"pose": "fade", "x": 31, "y": 7, "flip": false},
+          {"pose": "spin2", "x": 37, "y": 4, "flip": false}
+        ],
+        [{"pose": "spin3", "x": 32, "y": 4, "flip": false}],
+        [{"pose": "spin0", "x": 27, "y": 5, "flip": false}],
+        [{"pose": "spin1", "x": 22, "y": 6, "flip": false}],
+        [{"pose": "spin2", "x": 19, "y": 7, "flip": false}],
+        [{"pose": "spin3", "x": 16, "y": 6, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}]
+      ]
+    },
+    {
+      "name": "pulse_glow",
+      "frames": [
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "small", "x": 16, "y": 7, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "grow", "x": 13, "y": 4, "flip": false}],
+        [
+          {"pose": "grow", "x": 13, "y": 4, "flip": false},
+          {"pose": "glint", "x": 10, "y": 9, "flip": false},
+          {"pose": "glint", "x": 27, "y": 9, "flip": false}
+        ],
+        [
+          {"pose": "grow", "x": 13, "y": 4, "flip": false},
+          {"pose": "sparkle", "x": 8, "y": 8, "flip": false},
+          {"pose": "sparkle", "x": 27, "y": 8, "flip": false}
+        ],
+        [
+          {"pose": "spin0", "x": 14, "y": 5, "flip": false},
+          {"pose": "glint", "x": 8, "y": 9, "flip": false},
+          {"pose": "glint", "x": 29, "y": 9, "flip": false}
+        ],
+        [{"pose": "small", "x": 16, "y": 7, "flip": false}],
+        [{"pose": "small", "x": 16, "y": 7, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "grow", "x": 13, "y": 4, "flip": false}],
+        [
+          {"pose": "grow", "x": 13, "y": 4, "flip": false},
+          {"pose": "glint", "x": 18, "y": 0, "flip": false},
+          {"pose": "glint", "x": 19, "y": 19, "flip": false}
+        ],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "small", "x": 16, "y": 7, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}]
+      ]
+    },
+    {
+      "name": "playful_bounce",
+      "frames": [
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 7, "flip": false}],
+        [{"pose": "small", "x": 16, "y": 11, "flip": false}],
+        [{"pose": "spin1", "x": 14, "y": 6, "flip": false}],
+        [{"pose": "spin2", "x": 15, "y": 4, "flip": false}],
+        [{"pose": "spin3", "x": 14, "y": 1, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 0, "flip": false}],
+        [
+          {"pose": "spin0", "x": 14, "y": 0, "flip": false},
+          {"pose": "glint", "x": 27, "y": 2, "flip": false}
+        ],
+        [{"pose": "spin1", "x": 14, "y": 1, "flip": false}],
+        [{"pose": "spin2", "x": 15, "y": 4, "flip": false}],
+        [{"pose": "spin3", "x": 14, "y": 6, "flip": false}],
+        [
+          {"pose": "small", "x": 16, "y": 11, "flip": false},
+          {"pose": "glint", "x": 12, "y": 18, "flip": false},
+          {"pose": "glint", "x": 25, "y": 18, "flip": false}
+        ],
+        [{"pose": "spin0", "x": 14, "y": 7, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 4, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 4, "flip": false}],
+        [{"pose": "spin0", "x": 14, "y": 5, "flip": false}]
+      ]
+    }
+  ]
+}

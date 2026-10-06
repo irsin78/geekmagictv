@@ -1,0 +1,5 @@
+# Python packages for building and the developer tools (python3 -m venv .venv && .venv/bin/pip install -r tools/requirements.txt).
+# tools/push_usage.py itself uses only the standard library.
+platformio   # firmware builds (pio run)
+pillow       # gen_glyphs.py, gen_icons.py, probe.py
+requests     # probe.py (safeboot benchmarks)

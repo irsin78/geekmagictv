@@ -1,0 +1,19 @@
+# Local-only material: flash dumps (contain Wi-Fi credentials), firmware builds, measurement
+# reports, the cloned upstream repo and third-party references. See README "Repository layout".
+local/
+
+# Secrets: copy include/secrets.h.example to include/secrets.h
+**/include/secrets.h
+
+# Build / tool environments
+.venv/
+.pio/
+__pycache__/
+*.pyc
+
+# Fonts are downloaded, not committed (see tools/fonts/README.md); generated headers are committed
+tools/fonts/*.ttf
+tools/fonts/*.otf
+
+# macOS
+.DS_Store

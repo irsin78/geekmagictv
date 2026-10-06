@@ -1,0 +1,669 @@
+{
+  "claude": {
+    "palette": {"O": "#D97757", "S": "#A94F35"},
+    "poses": {
+      "stand": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "blink": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "look_left": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OO..OOOOOOOOOOOO..OOOOOO......",
+        "......OO..OOOOOOOOOOOO..OOOOOO......",
+        "......OO..OOOOOOOOOOOO..OOOOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "wave": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO..OO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO..OO..",
+        "......OOOO..OOOOOOOOOOOO..OOOO..OO..",
+        "......OOOO..OOOOOOOOOOOO..OOOOOOOO..",
+        "......OOOO..OOOOOOOOOOOO..OOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "cheer": [
+        "..OO..OOOOOOOOOOOOOOOOOOOOOOOO..OO..",
+        "..OO..OOOOOOOOOOOOOOOOOOOOOOOO..OO..",
+        "..OO..OOOOOOOOOOOOOOOOOOOOOOOO..OO..",
+        "..OO..OOOO..OOOOOOOOOOOO..OOOO..OO..",
+        "..OOOOOOOO..OOOOOOOOOOOO..OOOOOOOO..",
+        "..OOOOOOOO..OOOOOOOOOOOO..OOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "crouch": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "stretch": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "step": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        ".......OO....OO......OO....OO.......",
+        "......OO......OO....OO......OO......"
+      ],
+      "wiggle": [
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOO..OOOOOOOOOOOO..OOOO......",
+        "..OO..OOOO..OOOOOOOOOOOO..OOOO......",
+        "..OOOOOOOO..OOOOOOOOOOOO..OOOO......",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "..OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO..OO..",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "......OOOOOOOOOOOOOOOOOOOOOOOO......",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........",
+        "........OO..OO........OO..OO........"
+      ],
+      "spark": [
+        "..O..",
+        "..O..",
+        "OOOOO",
+        "..O..",
+        "..O.."
+      ],
+      "z": [
+        "SSSS",
+        "..S.",
+        ".S..",
+        "SSSS"
+      ]
+    },
+    "sequences": [
+      {
+        "name": "double_blink",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "curious_look",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "look_left", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "look_left", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "look_left", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "look_left", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "look_left", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "look_left", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "side_hops",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "crouch", "x": 2, "y": 9, "flip": false}],
+          [{"pose": "stand", "x": 1, "y": 5, "flip": false}],
+          [{"pose": "cheer", "x": 0, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 0, "y": 5, "flip": false}],
+          [{"pose": "crouch", "x": 0, "y": 9, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 5, "flip": false}],
+          [{"pose": "cheer", "x": 4, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 4, "y": 5, "flip": false}],
+          [{"pose": "crouch", "x": 4, "y": 9, "flip": false}],
+          [{"pose": "stand", "x": 3, "y": 5, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "friendly_wave",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "wiggle", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "wave", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "wave", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "wiggle", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "wave", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "wiggle", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "wave", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "hooray",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "wave", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "cheer", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "cheer", "x": 2, "y": 7, "flip": false}, {"pose": "spark", "x": 1, "y": 1, "flip": false}],
+          [{"pose": "cheer", "x": 2, "y": 7, "flip": false}, {"pose": "spark", "x": 34, "y": 0, "flip": false}],
+          [{"pose": "cheer", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "wave", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "big_jump",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "crouch", "x": 2, "y": 9, "flip": false}],
+          [{"pose": "crouch", "x": 2, "y": 9, "flip": false}],
+          [{"pose": "stretch", "x": 2, "y": 4, "flip": false}],
+          [{"pose": "stretch", "x": 2, "y": 1, "flip": false}],
+          [{"pose": "cheer", "x": 2, "y": 0, "flip": false}],
+          [{"pose": "cheer", "x": 2, "y": 0, "flip": false}, {"pose": "spark", "x": 0, "y": 15, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 2, "flip": false}],
+          [{"pose": "stretch", "x": 2, "y": 4, "flip": false}],
+          [{"pose": "crouch", "x": 2, "y": 9, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "tiny_shuffle",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "step", "x": 1, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 0, "y": 7, "flip": false}],
+          [{"pose": "step", "x": 1, "y": 7, "flip": true}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "step", "x": 3, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 4, "y": 7, "flip": false}],
+          [{"pose": "step", "x": 3, "y": 7, "flip": true}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "happy_wiggle",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "wiggle", "x": 1, "y": 7, "flip": false}],
+          [{"pose": "wiggle", "x": 1, "y": 7, "flip": false}],
+          [{"pose": "wiggle", "x": 3, "y": 7, "flip": true}],
+          [{"pose": "wiggle", "x": 3, "y": 7, "flip": true}],
+          [{"pose": "wiggle", "x": 1, "y": 7, "flip": false}],
+          [{"pose": "wiggle", "x": 3, "y": 7, "flip": true}],
+          [{"pose": "cheer", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      },
+      {
+        "name": "sleepy_idle",
+        "frames": [
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}, {"pose": "z", "x": 32, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}, {"pose": "z", "x": 33, "y": 2, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}, {"pose": "z", "x": 34, "y": 1, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}, {"pose": "z", "x": 35, "y": 0, "flip": false}],
+          [{"pose": "blink", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}],
+          [{"pose": "look_left", "x": 2, "y": 7, "flip": true}],
+          [{"pose": "stand", "x": 2, "y": 7, "flip": false}]
+        ]
+      }
+    ]
+  },
+  "codex": {
+    "palette": {"B": "#3984FF", "H": "#9BD9FF", "S": "#2457BC", "D": "#10234D"},
+    "poses": {
+      "stand": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBDDDDDDDDDDBBBH.",
+        "HBBBDDDDDDDDDDDDBBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        ".HBBDDDDDDDDDDDDBBH.",
+        "..HBBBBBBBBBBBBBBH..",
+        "...SSSBBBBBBBBSSS...",
+        "..HBBSSBBBBBBSSBBH..",
+        "..HHBSBBBBBBBBSBBHH.",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        ".....SBBSSSSBBS.....",
+        "....HBBB....BBBH....",
+        "....SSSS....SSSS...."
+      ],
+      "type": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBDDDDDDDDDDBBBH.",
+        "HBBBDDDDDDDDDDDDBBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        ".HBBDDDDDDDDDDDDBBH.",
+        "..HBBBBBBBBBBBBBBH..",
+        "...SSSBBBBBBBBSSS...",
+        "..HBBSSBBBBBBSSBBH..",
+        ".HHBBSBBBBBBBBSBBHHH",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        ".....SBBSSSSBBS.....",
+        "....HBBB....BBBH....",
+        "....SSSS....SSSS...."
+      ],
+      "blink": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBDDDDDDDDDDBBBH.",
+        "HBBBDDDDDDDDDDDDBBBH",
+        "HBBBDDDDDDDDDDDDDBBH",
+        "HBBBDDDDDDDDDDDDDBBH",
+        ".HBBDDDDDDDDDDDDBBH.",
+        "..HBBBBBBBBBBBBBBH..",
+        "...SSSBBBBBBBBSSS...",
+        "..HBBSSBBBBBBSSBBH..",
+        "..HHBSBBBBBBBBSBBHH.",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        ".....SBBSSSSBBS.....",
+        "....HBBB....BBBH....",
+        "....SSSS....SSSS...."
+      ],
+      "look": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBDDDDDDDDDDBBBH.",
+        "HBBBDDDDDDDDDDDDBBBH",
+        "HBBBDHHDDDDHHDDDDBBH",
+        "HBBBDHHDDDDHHDDDDBBH",
+        ".HBBDDDDDDDDDDDDBBH.",
+        "..HBBBBBBBBBBBBBBH..",
+        "...SSSBBBBBBBBSSS...",
+        "..HBBSSBBBBBBSSBBH..",
+        "..HHBSBBBBBBBBSBBHH.",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        ".....SBBSSSSBBS.....",
+        "....HBBB....BBBH....",
+        "....SSSS....SSSS...."
+      ],
+      "run": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBDDDDDDDDDDBBBH.",
+        "HBBBDDDDDDDDDDDDBBBH",
+        "HBBBDHHDDDDHHDDDDBBH",
+        "HBBBDHHDDDDHHDDDDBBH",
+        ".HBBDDDDDDDDDDDDBBH.",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HHSSSBBBBBBBBSSS...",
+        "HBBBSSBBBBBBSSBBH...",
+        ".HHBBSBBBBBBBBSBBHH.",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        "....HBBBSSSSBBBH....",
+        "...HBBB......BBBH...",
+        "...SSSS......SSSS..."
+      ],
+      "wave": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBDDDDDDDDDDBBBH.",
+        "HBBBDDDDDDDDDDDDBBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        ".HBBDDDDDDDDDDDDBBH.",
+        "..HBBBBBBBBBBBBBBHHH",
+        "...SSSBBBBBBBBSSSBBH",
+        "..HBBSSBBBBBBSSBBBH.",
+        "..HHBSBBBBBBBBSBBH..",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        ".....SBBSSSSBBS.....",
+        "....HBBB....BBBH....",
+        "....SSSS....SSSS...."
+      ],
+      "cheer": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBDDDDDDDDDDBBBH.",
+        "HBBBDDDDDDDDDDDDBBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        "HBBBDDHHDDDDHHDDDBBH",
+        ".HBBDDDDDDDDDDDDBBH.",
+        "HHHBBBBBBBBBBBBBBHHH",
+        "HBBSSSBBBBBBBBSSSBBH",
+        ".HBBBSSBBBBBBSSBBBH.",
+        "..HBBSBBBBBBBBSBBH..",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        ".....SBBSSSSBBS.....",
+        "....HBBB....BBBH....",
+        "....SSSS....SSSS...."
+      ],
+      "edge": [
+        "..HHHH..",
+        ".HBBBBH.",
+        ".HBBBBH.",
+        "HBBBBBBH",
+        "HBBBBBBH",
+        "HBDDDDBH",
+        "HBDDDDBH",
+        "HBDHHDBH",
+        "HBDHHDBH",
+        "HBDDDDBH",
+        ".HBBBBH.",
+        "..SBB S.",
+        ".HBBBBH.",
+        ".HHBBHH.",
+        "..SBB S.",
+        "..SBB S.",
+        "..SBB S.",
+        "..HBBH..",
+        "..SSSS.."
+      ],
+      "back": [
+        "........HHHHHH......",
+        ".......HBBBBBBH.....",
+        "...HHHHBBBBBBBBHH...",
+        "..HBBBBBBBBBBBBBBH..",
+        ".HBBBBBBBBBBBBBBBBH.",
+        ".HBBBBBBBBBBBBBBBBH.",
+        "HBBBBBBBBBBBBBBBBBBH",
+        "HBBBBBSSSSSSSSBBBBBH",
+        "HBBBBBSBBBBBBSBBBBBH",
+        ".HBBBBSSSSSSSSBBBBH.",
+        "..HBBBBBBBBBBBBBBH..",
+        "...SSSBBBBBBBBSSS...",
+        "..HBBSSBBBBBBSSBBH..",
+        "..HHBSBBBBBBBBSBBHH.",
+        "...SSBBBBBBBBBBSS...",
+        ".....SBBBBBBBBS.....",
+        ".....SBBSSSSBBS.....",
+        "....HBBB....BBBH....",
+        "....SSSS....SSSS...."
+      ],
+      "crate": [
+        "HHHHHHHH",
+        "HSSSSSSH",
+        "HSBSSBSH",
+        "HSSBBSSH",
+        "HSBSSBSH",
+        "HHHHHHHH"
+      ],
+      "spark": [
+        "..H..",
+        "..B..",
+        "HBHBH",
+        "..B..",
+        "..H.."
+      ],
+      "motion": [
+        "HHH.",
+        "....",
+        ".HHH"
+      ]
+    },
+    "sequences": [
+      {
+        "name": "busy_typing",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "dash_left",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "run", "x": 7, "y": 3, "flip": false}, {"pose": "motion", "x": 28, "y": 15, "flip": false}],
+          [{"pose": "run", "x": 3, "y": 3, "flip": false}, {"pose": "motion", "x": 25, "y": 15, "flip": false}],
+          [{"pose": "stand", "x": 1, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 1, "y": 3, "flip": false}],
+          [{"pose": "run", "x": 4, "y": 3, "flip": true}, {"pose": "motion", "x": 0, "y": 15, "flip": true}],
+          [{"pose": "run", "x": 8, "y": 3, "flip": true}, {"pose": "motion", "x": 3, "y": 15, "flip": true}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "dash_right",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "run", "x": 13, "y": 3, "flip": true}, {"pose": "motion", "x": 8, "y": 15, "flip": true}],
+          [{"pose": "run", "x": 17, "y": 3, "flip": true}, {"pose": "motion", "x": 12, "y": 15, "flip": true}],
+          [{"pose": "stand", "x": 19, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 19, "y": 3, "flip": false}],
+          [{"pose": "run", "x": 16, "y": 3, "flip": false}, {"pose": "motion", "x": 36, "y": 15, "flip": false}],
+          [{"pose": "run", "x": 12, "y": 3, "flip": false}, {"pose": "motion", "x": 33, "y": 15, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "scan_and_blink",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "jump",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "cheer", "x": 10, "y": 2, "flip": false}],
+          [{"pose": "cheer", "x": 10, "y": 0, "flip": false}],
+          [{"pose": "cheer", "x": 10, "y": 0, "flip": false}, {"pose": "spark", "x": 31, "y": 4, "flip": false}],
+          [{"pose": "cheer", "x": 10, "y": 1, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 2, "flip": false}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "spin",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "edge", "x": 16, "y": 3, "flip": true}],
+          [{"pose": "back", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "edge", "x": 16, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "edge", "x": 16, "y": 3, "flip": true}],
+          [{"pose": "back", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "edge", "x": 16, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "wave_hello",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "wave", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "wave", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "wave", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "wave", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "carry_and_work",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "look", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": false}, {"pose": "crate", "x": 16, "y": 15, "flip": false}],
+          [{"pose": "type", "x": 10, "y": 3, "flip": true}, {"pose": "crate", "x": 16, "y": 14, "flip": false}],
+          [{"pose": "run", "x": 9, "y": 3, "flip": false}, {"pose": "crate", "x": 15, "y": 14, "flip": false}],
+          [{"pose": "type", "x": 8, "y": 3, "flip": false}, {"pose": "crate", "x": 14, "y": 14, "flip": false}],
+          [{"pose": "type", "x": 8, "y": 3, "flip": true}, {"pose": "crate", "x": 14, "y": 14, "flip": false}],
+          [{"pose": "type", "x": 8, "y": 3, "flip": false}, {"pose": "crate", "x": 14, "y": 15, "flip": false}],
+          [{"pose": "stand", "x": 8, "y": 3, "flip": false}, {"pose": "crate", "x": 1, "y": 16, "flip": false}],
+          [{"pose": "run", "x": 9, "y": 3, "flip": true}, {"pose": "crate", "x": 1, "y": 16, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}, {"pose": "crate", "x": 1, "y": 16, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      },
+      {
+        "name": "celebrate",
+        "frames": [
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "wave", "x": 10, "y": 3, "flip": true}],
+          [{"pose": "cheer", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "cheer", "x": 10, "y": 3, "flip": false}, {"pose": "spark", "x": 3, "y": 5, "flip": false}],
+          [{"pose": "wave", "x": 10, "y": 3, "flip": false}, {"pose": "spark", "x": 32, "y": 3, "flip": false}],
+          [{"pose": "cheer", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "wave", "x": 10, "y": 3, "flip": true}, {"pose": "spark", "x": 3, "y": 2, "flip": false}],
+          [{"pose": "cheer", "x": 10, "y": 3, "flip": false}, {"pose": "spark", "x": 32, "y": 6, "flip": false}],
+          [{"pose": "blink", "x": 10, "y": 3, "flip": false}],
+          [{"pose": "stand", "x": 10, "y": 3, "flip": false}]
+        ]
+      }
+    ]
+  }
+}

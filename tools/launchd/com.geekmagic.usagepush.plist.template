@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Filled in and installed by tools/install_launchd.sh: runs tools/push_usage.py every 60 s. -->
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>com.geekmagic.usagepush</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/usr/bin/python3</string>
+    <string>__SCRIPT__</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <!-- the CLIs (claude, codex, agy) are installed in ~/.local/bin by their installers -->
+    <key>PATH</key><string>__HOME__/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
+    <key>SMALLTV_HOST</key><string>__HOST__</string>
+  </dict>
+  <key>StartInterval</key><integer>60</integer>
+  <key>RunAtLoad</key><true/>
+  <key>StandardErrorPath</key><string>__HOME__/Library/Logs/smalltv-usage.log</string>
+  <key>StandardOutPath</key><string>__HOME__/Library/Logs/smalltv-usage.log</string>
+</dict>
+</plist>
