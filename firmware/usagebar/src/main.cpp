@@ -6,7 +6,8 @@
 // Endpoints
 //   GET  /              status + settings page (page.h)
 //   GET  /api/usage     current usage state (JSON)
-//   POST /api/usage     push new usage (Authorization: Bearer PUSH_TOKEN)
+//   POST /api/usage     push new usage (Authorization: Bearer <push token>)
+//   GET /api/wifi/scan, POST /api/wifi   Wi-Fi setup (open "SmallTV-Setup" AP until Wi-Fi is set)
 //   GET/POST /api/settings   brightness, language, weather place, admin password (settings.cpp)
 //   POST /api/login, /api/logout   optional admin password (password only, session cookie)
 //   GET  /api/info, /api/log     diagnostics
@@ -16,18 +17,20 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <DNSServer.h>
 #include <time.h>
 
 #include "common.h"
 #include "page.h"
 #include "update_server.h"
-#include "secrets.h"
+#include "config.h"
 
 static const char *HOSTNAME = "smalltv-usage";
 static const uint32_t STA_TIMEOUT_MS = 30000;
 static const uint32_t STA_RETRY_MS = 120000;
 
 ESP8266WebServer server(80);
+static DNSServer dns;  // captive portal while the setup access point runs
 PasswordUpdateServer updater;
 
 bool apMode = false;
@@ -35,18 +38,26 @@ static uint32_t lastStaAttempt = 0;
 
 // ---------- Wi-Fi ----------
 
+// Access point: the Wi-Fi setup portal when no Wi-Fi is configured, a fallback when it is unreachable.
+// Its DNS answers every name with the device, so phones pop up the setup page by themselves.
 static void startAp() {
   WiFi.mode(WIFI_AP_STA);
-  WiFi.softAP(AP_SSID, AP_PASS);
+  WiFi.softAP(AP_SSID, AP_PASS[0] ? AP_PASS : nullptr);
+  dns.start(53, "*", WiFi.softAPIP());
   apMode = true;
   logf("AP mode: %s @ %s", AP_SSID, WiFi.softAPIP().toString().c_str());
 }
 
 static void connectWifi() {
   WiFi.persistent(false);  // don't rewrite the SDK config sector
-  WiFi.mode(WIFI_STA);
   WiFi.hostname(HOSTNAME);
-  WiFi.begin(WIFI_SSID, WIFI_PASS);
+  if (!wifiConfigured()) {
+    logf("no Wi-Fi configured: setup portal");
+    startAp();
+    return;
+  }
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(wifiSsid(), wifiPass());
   lastStaAttempt = millis();
   while (WiFi.status() != WL_CONNECTED && millis() - lastStaAttempt < STA_TIMEOUT_MS) delay(250);
   if (WiFi.status() == WL_CONNECTED) {
@@ -96,6 +107,14 @@ void setup() {
   updater.setup(&server, "/update");  // protected only when an admin password is set on the web page
   server.collectHeaders("Authorization", "Cookie", "X-Password");
   server.on("/", HTTP_GET, [] { server.send_P(200, "text/html; charset=utf-8", ROOT_PAGE); });
+  server.onNotFound([] {  // captive portal: any URL a phone probes leads to the setup page
+    if (apMode) {
+      server.sendHeader(F("Location"), String("http://") + WiFi.softAPIP().toString() + "/");
+      server.send(302);
+    } else {
+      server.send(404, F("text/plain"), F("not found"));
+    }
+  });
   server.on("/api/info", HTTP_GET, handleInfo);
   server.on("/api/reboot", HTTP_POST, handleReboot);
   logRegister();
@@ -114,17 +133,19 @@ void setup() {
 }
 
 void loop() {
+  if (apMode) dns.processNextRequest();
   server.handleClient();
   displayLoop();
 
   // While someone is connected to the fallback AP (e.g. to OTA), don't retry the home network:
   // the reconnect scan changes channel and drops AP clients.
-  if (apMode && WiFi.status() != WL_CONNECTED && WiFi.softAPgetStationNum() == 0 &&
+  if (apMode && wifiConfigured() && WiFi.status() != WL_CONNECTED && WiFi.softAPgetStationNum() == 0 &&
       millis() - lastStaAttempt > STA_RETRY_MS) {
     lastStaAttempt = millis();
-    WiFi.begin(WIFI_SSID, WIFI_PASS);
+    WiFi.begin(wifiSsid(), wifiPass());
   }
   if (apMode && WiFi.status() == WL_CONNECTED) {
+    dns.stop();
     WiFi.softAPdisconnect(true);
     WiFi.mode(WIFI_STA);
     apMode = false;

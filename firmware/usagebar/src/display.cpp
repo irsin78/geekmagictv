@@ -9,6 +9,7 @@
 #include <time.h>
 
 #include "common.h"
+#include "config.h"
 #include "glyphs.h"
 #include "icons.h"
 
@@ -435,6 +436,20 @@ static void drawPanel(TFT_eSPI &g, int y0, const UsageProvider &p, uint32_t now,
 static void drawWaiting() {
   tft.fillScreen(TFT_BLACK);
   tft.setTextDatum(MC_DATUM);
+  if (!wifiConfigured()) {
+    // First boot of a release build: guide the user through the setup access point.
+    tft.setTextColor(TFT_WHITE, TFT_BLACK);
+    tft.drawString("Wi-Fi setup", 120, 60, 4);
+    tft.setTextColor(TFT_LIGHTGREY, TFT_BLACK);
+    tft.drawString("1. Join this Wi-Fi:", 120, 100, 2);
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+    tft.drawString(AP_SSID, 120, 126, 4);
+    tft.setTextColor(TFT_LIGHTGREY, TFT_BLACK);
+    tft.drawString("2. Open in a browser:", 120, 160, 2);
+    tft.setTextColor(TFT_YELLOW, TFT_BLACK);
+    tft.drawString(WiFi.softAPIP().toString(), 120, 186, 4);
+    return;
+  }
   tft.setTextColor(TFT_WHITE, TFT_BLACK);
   tft.drawString("Waiting for data", 120, 96, 4);
   tft.setTextColor(TFT_YELLOW, TFT_BLACK);

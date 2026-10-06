@@ -1,6 +1,6 @@
 // Usage state: accepts compact JSON pushed by tools/push_usage.py.
 //
-// POST /api/usage  (Authorization: Bearer PUSH_TOKEN)
+// POST /api/usage  (Authorization: Bearer <push token>, see pushToken())
 // {
 //   "ts": 1790000000,                       // unix seconds when collected
 //   "net": "ok", "net_since": 0,            // "login" while the Mac's network login has expired
@@ -17,7 +17,6 @@
 #include <time.h>
 
 #include "common.h"
-#include "secrets.h"
 
 UsageState usage{};
 
@@ -43,7 +42,7 @@ static void applyTz(long off) {
 }
 
 static bool pushAuthorized() {
-  return server.header("Authorization") == "Bearer " PUSH_TOKEN;
+  return server.header("Authorization") == String("Bearer ") + pushToken();
 }
 
 static void handlePush() {

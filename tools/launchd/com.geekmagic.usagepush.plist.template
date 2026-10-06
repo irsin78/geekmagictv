@@ -14,6 +14,7 @@
     <!-- the CLIs (claude, codex, agy) are installed in ~/.local/bin by their installers -->
     <key>PATH</key><string>__HOME__/.local/bin:/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin</string>
     <key>SMALLTV_HOST</key><string>__HOST__</string>
+    <key>SMALLTV_TOKEN</key><string>__TOKEN__</string>
   </dict>
   <key>StartInterval</key><integer>60</integer>
   <key>RunAtLoad</key><true/>

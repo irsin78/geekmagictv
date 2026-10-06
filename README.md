@@ -67,7 +67,7 @@ The only way in is over the air, so a firmware that crashes before Wi-Fi comes u
 device. Both firmwares therefore:
 
 - start Wi-Fi and the HTTP `/update` page **before** the display, and fall back to an access point
-  (`SmallTV-Safe`, 192.168.4.1) if the Wi-Fi is unreachable;
+  (192.168.4.1) if the Wi-Fi is unreachable or not set up yet;
 - keep a crash guard in RTC memory. If the device resets during a risky task (display init, drawing,
   parsing a push), it reboots without that task;
 - use the stock 4M3M flash layout, and **never mount, format or upload the LittleFS**, so the stock
@@ -92,27 +92,43 @@ Back up first: `safeboot` serves the whole 4 MB flash at `/flash.bin`.
 
 ## Getting started
 
-1. **Tools**
+### Option A: prebuilt firmware (no build tools needed)
+
+1. Download `smalltv-usagebar-*.bin` (and, recommended, `smalltv-safeboot-*.bin`) from
+   [Releases](https://github.com/irsin78/geekmagictv/releases). The release files contain no
+   passwords or tokens.
+2. **Back up the stock firmware (recommended).** On the stock firmware's page `http://<device>/update`,
+   upload `smalltv-safeboot-*.bin`. After it restarts, join the open Wi-Fi **SmallTV-Safe** and download
+   `http://192.168.4.1/flash.bin` (the whole 4 MB flash). Then upload `smalltv-usagebar-*.bin` at
+   `http://192.168.4.1/update`. Skipping the backup? Upload `smalltv-usagebar-*.bin` directly on the
+   stock `/update` page.
+3. **Wi-Fi setup.** The display shows *Wi-Fi setup*. Join the open Wi-Fi **SmallTV-Setup** with a
+   phone or computer. The setup page opens by itself (or go to `http://192.168.4.1`). Press *Find
+   networks*, pick your Wi-Fi, enter its password and connect. The display restarts, joins your Wi-Fi
+   and shows its new address.
+4. **Device page.** Open `http://<device-ip>/`, set the language, weather place and brightness, and copy
+   the **push token**.
+5. **On the Mac:** install and log in to the CLIs ([Claude Code](https://code.claude.com/docs/en/setup),
+   [Codex](https://developers.openai.com/codex/cli),
+   [Antigravity CLI](https://github.com/google-antigravity/antigravity-cli); run `claude`, `codex` and
+   `agy` once each), clone this repository, and start the collector:
    ```sh
-   python3 -m venv .venv && .venv/bin/pip install -r tools/requirements.txt
+   tools/install_launchd.sh <device-ip> <push-token>
    ```
-2. **Secrets.** Copy `include/secrets.h.example` to `include/secrets.h` in `firmware/safeboot` and
-   `firmware/usagebar`, then fill in your Wi-Fi details and a random `PUSH_TOKEN`.
-3. **Back up the stock firmware.** Build `safeboot` (`cd firmware/safeboot && ../../.venv/bin/pio run`).
-   Upload `.pio/build/smalltv/firmware.bin` on the stock firmware's `http://<device>/update` page, then
-   download `http://<device>/flash.bin`.
-4. **Flash the display firmware.** Build `firmware/usagebar` the same way and upload it at `/update`.
-5. **Log in to the CLIs on the Mac.** Install [Claude Code](https://code.claude.com/docs/en/setup),
-   [Codex](https://developers.openai.com/codex/cli) and the
-   [Antigravity CLI](https://github.com/google-antigravity/antigravity-cli). Run `claude`, `codex` and
-   `agy` once each and sign in.
-6. **Start the collector.**
-   ```sh
-   tools/install_launchd.sh <device-ip>
-   ```
-   The log is in `~/Library/Logs/smalltv-usage.log`. Remove the agent with `tools/install_launchd.sh --uninstall`.
-7. **Settings.** Open `http://<device-ip>/` to set the language, weather place, brightness and an
-   optional admin password.
+   The log is in `~/Library/Logs/smalltv-usage.log`; `tools/install_launchd.sh --uninstall` removes it.
+
+> The Wi-Fi setup flow of the release build (step 3) has not been tested on hardware by the author:
+> the test device runs a build with its Wi-Fi compiled in. Everything after it is the same code.
+
+### Option B: build from source
+
+1. `python3 -m venv .venv && .venv/bin/pip install -r tools/requirements.txt`
+2. Optional: copy `include/secrets.h.example` to `include/secrets.h` in `firmware/usagebar` and
+   `firmware/safeboot` to compile in your Wi-Fi (and a `PUSH_TOKEN`, which `push_usage.py` then reads
+   without `SMALLTV_TOKEN`). Without it the build behaves like the release (Wi-Fi setup page).
+3. Build with `../../.venv/bin/pio run` in each firmware folder. Use `-e release` for files without
+   secrets, or `-e tls` in `safeboot` for the HTTPS benchmark. Upload `.pio/build/<env>/firmware.bin` at
+   `/update`, then continue from step 4 above.
 
 **Restore the stock firmware:** upload the official image from
 [GeekMagicClock/smalltv](https://github.com/GeekMagicClock/smalltv) (V3.1.4) at `/update`. If the
@@ -124,8 +140,9 @@ current image is large, upload a smaller one (e.g. `safeboot`) first. See the si
 | Endpoint | |
 |---|---|
 | `GET /` | status and settings page |
-| `GET/POST /api/usage` | current state / push new usage (`Authorization: Bearer PUSH_TOKEN`) |
-| `GET/POST /api/settings` | brightness, language, weather place, admin password |
+| `GET/POST /api/usage` | current state / push new usage (`Authorization: Bearer <push token>`) |
+| `GET/POST /api/settings` | brightness, language, weather place, admin password (push token shown when authorised) |
+| `GET /api/wifi/scan`, `POST /api/wifi` | Wi-Fi setup |
 | `POST /api/login`, `/api/logout` | admin password session (only when a password is set) |
 | `GET /api/info`, `/api/log` | diagnostics |
 | `POST /api/reboot` | reboot |

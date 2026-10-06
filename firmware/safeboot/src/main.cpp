@@ -21,7 +21,23 @@
 
 #include "diag.h"
 #include "page.h"
+// include/secrets.h is optional. Without it (or with `pio run -e release`) nothing secret is compiled
+// in: the device opens the open "SmallTV-Safe" access point (192.168.4.1) and needs no password.
+#if !defined(SAFEBOOT_RELEASE) && __has_include("secrets.h")
 #include "secrets.h"
+#endif
+#ifndef WIFI_SSID
+#define WIFI_SSID ""
+#define WIFI_PASS ""
+#endif
+#ifndef ADMIN_USER
+#define ADMIN_USER ""
+#define ADMIN_PASS ""
+#endif
+#ifndef AP_SSID
+#define AP_SSID "SmallTV-Safe"
+#define AP_PASS ""
+#endif
 
 static const char *HOSTNAME = "smalltv-safe";
 static const uint32_t STA_TIMEOUT_MS = 30000;
@@ -34,22 +50,26 @@ bool apMode = false;
 static uint32_t lastStaAttempt = 0;
 
 bool requireAuth() {
-  if (server.authenticate(ADMIN_USER, ADMIN_PASS)) return true;
+  if (!ADMIN_PASS[0] || server.authenticate(ADMIN_USER, ADMIN_PASS)) return true;
   server.requestAuthentication();
   return false;
 }
 
 static void startAp() {
   WiFi.mode(WIFI_AP_STA);
-  WiFi.softAP(AP_SSID, AP_PASS);
+  WiFi.softAP(AP_SSID, AP_PASS[0] ? AP_PASS : nullptr);
   apMode = true;
   logf("AP mode: %s @ %s", AP_SSID, WiFi.softAPIP().toString().c_str());
 }
 
 static void connectWifi() {
   WiFi.persistent(false);  // don't rewrite the SDK config sector
-  WiFi.mode(WIFI_STA);
   WiFi.hostname(HOSTNAME);
+  if (!WIFI_SSID[0]) {  // release build: no network to join, serve everything on the access point
+    startAp();
+    return;
+  }
+  WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
   lastStaAttempt = millis();
 
@@ -125,7 +145,7 @@ void setup() {
 #ifndef SAFEBOOT_LEAN  // lean builds keep only HTTP /update for recovery
   MDNS.begin(HOSTNAME);
   ArduinoOTA.setHostname(HOSTNAME);
-  ArduinoOTA.setPassword(ADMIN_PASS);
+  if (ADMIN_PASS[0]) ArduinoOTA.setPassword(ADMIN_PASS);
   ArduinoOTA.begin();
 #endif
 
@@ -162,7 +182,7 @@ void loop() {
   diagLoop();
 
   // In AP fallback, keep retrying the home network in the background.
-  if (apMode && WiFi.status() != WL_CONNECTED && millis() - lastStaAttempt > STA_RETRY_MS) {
+  if (apMode && WIFI_SSID[0] && WiFi.status() != WL_CONNECTED && millis() - lastStaAttempt > STA_RETRY_MS) {
     lastStaAttempt = millis();
     WiFi.begin(WIFI_SSID, WIFI_PASS);
   }

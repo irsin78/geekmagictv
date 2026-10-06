@@ -16,13 +16,18 @@ section{background:var(--card);border:1px solid var(--bd);border-radius:10px;pad
 table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:4px 6px;border-bottom:1px solid var(--bd)}
 button,select,input{font:inherit;border-radius:6px;border:1px solid var(--bd);padding:6px 10px;background:var(--bg);color:var(--fg)}
 button{cursor:pointer}button.on{background:var(--acc);color:#fff;border-color:var(--acc)}
-#results button{display:block;width:100%;text-align:left;margin:4px 0}
+#results button,#nets button{display:block;width:100%;text-align:left;margin:4px 0}
 .m{color:var(--mut);font-size:13px}a{color:var(--acc);margin-right:12px}
 </style></head><body>
 <h1 id="t_title"></h1>
 <section id="loginbox" hidden><h2 id="a_login"></h2>
 <input type="password" id="lp" style="width:60%"> <button id="a_login_btn" onclick="login()"></button><p class="m" id="lmsg"></p></section>
-<section><h2 id="t_usage"></h2><table id="usage"></table><p class="m" id="age"></p></section>
+<section id="wifisec"><h2 id="w_title"></h2><p id="w_cur"></p>
+<button id="w_scan" onclick="scan()"></button><div id="nets"></div>
+<div id="wform" hidden><p id="w_ssid"></p><input type="password" id="wp" style="width:60%"> <button id="w_conn" onclick="joinWifi()"></button></div>
+<p class="m" id="wmsg"></p></section>
+<section id="tokensec" hidden><h2 id="w_tok"></h2><code id="token"></code><p class="m" id="w_tokhint"></p></section>
+<section id="usagesec"><h2 id="t_usage"></h2><table id="usage"></table><p class="m" id="age"></p></section>
 <section><h2 id="t_lang"></h2>
 <select id="lang"><option value="ko">한국어</option><option value="en">English</option><option value="ja">日本語</option><option value="zh">简体中文</option><option value="zh-TW">繁體中文</option>
 <option value="es">Español</option><option value="pt">Português</option><option value="fr">Français</option><option value="de">Deutsch</option><option value="it">Italiano</option>
@@ -95,6 +100,26 @@ vi:["Mật khẩu quản trị","Bật","Tắt","Đặt mật khẩu","Tắt","�
 id:["Kata sandi admin","Aktif","Nonaktif","Atur kata sandi","Matikan","Masuk","Kata sandi salah.","Kata sandi"],
 th:["รหัสผ่านผู้ดูแล","เปิด","ปิด","ตั้งรหัสผ่าน","ปิด","เข้าสู่ระบบ","รหัสผ่านไม่ถูกต้อง","รหัสผ่าน"],
 ar:["كلمة مرور المسؤول","مفعّلة","معطّلة","تعيين كلمة المرور","إيقاف","تسجيل الدخول","كلمة المرور خاطئة.","كلمة المرور"]};
+// Wi-Fi strings: [title, not set, scan, connect, password, saved+rebooting, push token, token hint, setup hint]
+const W={ko:["Wi-Fi","설정 안 됨","주변 Wi-Fi 찾기","연결","Wi-Fi 비밀번호","저장했습니다. 기기가 재시작해서 이 Wi-Fi에 연결합니다. 휴대폰도 같은 Wi-Fi로 옮긴 뒤 기기 화면에 나오는 주소로 접속하세요.","전송 토큰","Mac에서: tools/install_launchd.sh <기기 IP> <토큰>","먼저 아래에서 집 Wi-Fi를 연결하세요."],
+en:["Wi-Fi","not set","Find networks","Connect","Wi-Fi password","Saved. The device restarts and joins this network. Move your phone to the same Wi-Fi and open the address shown on the display.","Push token","On the Mac: tools/install_launchd.sh <device IP> <token>","First connect the device to your Wi-Fi below."],
+ja:["Wi-Fi","未設定","Wi-Fiを検索","接続","Wi-Fiパスワード","保存しました。端末が再起動してこのWi-Fiに接続します。スマホも同じWi-Fiに切り替えて、画面に表示されるアドレスを開いてください。","送信トークン","Macで: tools/install_launchd.sh <端末のIP> <トークン>","まず下で自宅のWi-Fiに接続してください。"],
+zh:["Wi-Fi","未设置","搜索 Wi-Fi","连接","Wi-Fi 密码","已保存。设备将重启并连接此 Wi-Fi。请将手机切换到同一 Wi-Fi，然后打开屏幕上显示的地址。","推送令牌","在 Mac 上: tools/install_launchd.sh <设备 IP> <令牌>","请先在下方连接 Wi-Fi。"],
+es:["Wi-Fi","sin configurar","Buscar redes","Conectar","Contraseña Wi-Fi","Guardado. El dispositivo se reinicia y se une a esta red. Cambia el teléfono a la misma Wi-Fi y abre la dirección que muestra la pantalla.","Token de envío","En el Mac: tools/install_launchd.sh <IP del dispositivo> <token>","Primero conecta el dispositivo a tu Wi-Fi aquí abajo."],
+pt:["Wi-Fi","não configurado","Procurar redes","Conectar","Senha do Wi-Fi","Salvo. O dispositivo reinicia e entra nesta rede. Mude o celular para o mesmo Wi-Fi e abra o endereço mostrado na tela.","Token de envio","No Mac: tools/install_launchd.sh <IP do dispositivo> <token>","Primeiro conecte o dispositivo ao seu Wi-Fi abaixo."],
+fr:["Wi-Fi","non configuré","Chercher les réseaux","Connecter","Mot de passe Wi-Fi","Enregistré. L'appareil redémarre et rejoint ce réseau. Passez votre téléphone sur le même Wi-Fi et ouvrez l'adresse affichée à l'écran.","Jeton d'envoi","Sur le Mac : tools/install_launchd.sh <IP de l'appareil> <jeton>","Connectez d'abord l'appareil à votre Wi-Fi ci-dessous."],
+de:["WLAN","nicht eingerichtet","Netzwerke suchen","Verbinden","WLAN-Passwort","Gespeichert. Das Gerät startet neu und verbindet sich mit diesem Netz. Wechseln Sie mit dem Handy ins selbe WLAN und öffnen Sie die angezeigte Adresse.","Push-Token","Auf dem Mac: tools/install_launchd.sh <Geräte-IP> <Token>","Verbinden Sie das Gerät zuerst unten mit Ihrem WLAN."],
+it:["Wi-Fi","non configurato","Cerca reti","Connetti","Password Wi-Fi","Salvato. Il dispositivo si riavvia e si collega a questa rete. Passa il telefono alla stessa Wi-Fi e apri l'indirizzo mostrato sullo schermo.","Token di invio","Sul Mac: tools/install_launchd.sh <IP del dispositivo> <token>","Prima collega il dispositivo alla tua Wi-Fi qui sotto."],
+"zh-TW":["Wi-Fi","未設定","搜尋 Wi-Fi","連線","Wi-Fi 密碼","已儲存。裝置將重新啟動並連上此 Wi-Fi。請將手機切換到同一個 Wi-Fi，再開啟螢幕上顯示的位址。","推送權杖","在 Mac 上: tools/install_launchd.sh <裝置 IP> <權杖>","請先在下方連上 Wi-Fi。"],
+ru:["Wi-Fi","не настроено","Найти сети","Подключить","Пароль Wi-Fi","Сохранено. Устройство перезапустится и подключится к этой сети. Переключите телефон на ту же Wi-Fi и откройте адрес с экрана.","Токен отправки","На Mac: tools/install_launchd.sh <IP устройства> <токен>","Сначала подключите устройство к Wi-Fi ниже."],
+uk:["Wi-Fi","не налаштовано","Знайти мережі","Підключити","Пароль Wi-Fi","Збережено. Пристрій перезапуститься і підключиться до цієї мережі. Переключіть телефон на ту саму Wi-Fi і відкрийте адресу з екрана.","Токен надсилання","На Mac: tools/install_launchd.sh <IP пристрою> <токен>","Спочатку підключіть пристрій до Wi-Fi нижче."],
+pl:["Wi-Fi","nie ustawiono","Szukaj sieci","Połącz","Hasło Wi-Fi","Zapisano. Urządzenie uruchomi się ponownie i połączy z tą siecią. Przełącz telefon na tę samą Wi-Fi i otwórz adres z ekranu.","Token wysyłania","Na Macu: tools/install_launchd.sh <IP urządzenia> <token>","Najpierw połącz urządzenie z Wi-Fi poniżej."],
+nl:["Wifi","niet ingesteld","Netwerken zoeken","Verbinden","Wifi-wachtwoord","Opgeslagen. Het apparaat herstart en maakt verbinding met dit netwerk. Zet je telefoon op dezelfde wifi en open het adres op het scherm.","Push-token","Op de Mac: tools/install_launchd.sh <IP van apparaat> <token>","Verbind het apparaat eerst hieronder met je wifi."],
+tr:["Wi-Fi","ayarlanmadı","Ağları ara","Bağlan","Wi-Fi şifresi","Kaydedildi. Cihaz yeniden başlayıp bu ağa bağlanacak. Telefonunuzu aynı Wi-Fi'a geçirip ekranda görünen adresi açın.","Gönderim anahtarı","Mac'te: tools/install_launchd.sh <cihaz IP> <anahtar>","Önce cihazı aşağıdan Wi-Fi'ınıza bağlayın."],
+vi:["Wi-Fi","chưa thiết lập","Tìm mạng","Kết nối","Mật khẩu Wi-Fi","Đã lưu. Thiết bị sẽ khởi động lại và kết nối mạng này. Chuyển điện thoại sang cùng Wi-Fi rồi mở địa chỉ hiện trên màn hình.","Mã gửi","Trên Mac: tools/install_launchd.sh <IP thiết bị> <mã>","Trước tiên hãy kết nối thiết bị với Wi-Fi bên dưới."],
+id:["Wi-Fi","belum diatur","Cari jaringan","Hubungkan","Kata sandi Wi-Fi","Tersimpan. Perangkat akan mulai ulang dan bergabung ke jaringan ini. Pindahkan ponsel ke Wi-Fi yang sama lalu buka alamat di layar.","Token kirim","Di Mac: tools/install_launchd.sh <IP perangkat> <token>","Hubungkan perangkat ke Wi-Fi Anda di bawah terlebih dahulu."],
+th:["Wi-Fi","ยังไม่ได้ตั้งค่า","ค้นหาเครือข่าย","เชื่อมต่อ","รหัสผ่าน Wi-Fi","บันทึกแล้ว อุปกรณ์จะรีสตาร์ทและเชื่อมต่อเครือข่ายนี้ ให้เปลี่ยนโทรศัพท์ไปใช้ Wi-Fi เดียวกันแล้วเปิดที่อยู่ที่แสดงบนจอ","โทเค็นส่งข้อมูล","บน Mac: tools/install_launchd.sh <IP อุปกรณ์> <โทเค็น>","เชื่อมต่ออุปกรณ์กับ Wi-Fi ด้านล่างก่อน"],
+ar:["واي فاي","غير مُعدّ","البحث عن الشبكات","اتصال","كلمة مرور الواي فاي","تم الحفظ. سيعيد الجهاز التشغيل ويتصل بهذه الشبكة. انقل هاتفك إلى نفس الشبكة وافتح العنوان الظاهر على الشاشة.","رمز الإرسال","على الماك: tools/install_launchd.sh <عنوان IP للجهاز> <الرمز>","صِل الجهاز بشبكة الواي فاي أدناه أولاً."]};
 const $=id=>document.getElementById(id);
 let S={},L=T.ko;
 function dur(s){if(s<=0)return"0"+L.m;const m=Math.ceil(s/60),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mm=m%60;
@@ -104,7 +129,10 @@ function texts(){for(const k of["title","usage","lang","place","bl","search","up
  $("bl").innerHTML=[10,30,60,100].map(v=>`<button class="${v==S.bl?"on":""}" onclick="save({bl:${v}})">${v}%</button>`).join(" ");
  const a=A[S.lang]||A.en;$("a_title").textContent=a[0];$("a_state").textContent=S.locked?a[1]:a[2];$("a_set").textContent=a[3];
  $("a_off").textContent=a[4];$("a_off").hidden=!S.locked;$("a_login").textContent=a[5];$("a_login_btn").textContent=a[5];
- $("np").placeholder=$("lp").placeholder=a[7];$("loginbox").hidden=!(S.locked&&!S.authed)&&!location.search.includes("login")}
+ $("np").placeholder=$("lp").placeholder=a[7];
+ const w=W[S.lang]||W.en;$("w_title").textContent=w[0];$("w_cur").textContent=(S.setup?w[8]+" ":"")+(S.wifi||w[1]);$("w_scan").textContent=w[2];
+ $("w_conn").textContent=w[3];$("wp").placeholder=w[4];$("w_tok").textContent=w[6];$("w_tokhint").textContent=w[7];
+ $("tokensec").hidden=!S.token;$("token").textContent=S.token||"";$("usagesec").hidden=!!S.setup;$("loginbox").hidden=!(S.locked&&!S.authed)&&!location.search.includes("login")}
 async function usage(){try{const u=await(await fetch("/api/usage")).json();
  if(!u.have){$("usage").innerHTML="";$("age").textContent=L.none;return}
  let h=`<tr><th>${L.svc}</th><th>${L.win}</th><th>${L.left}</th><th>${L.reset}</th></tr>`;
@@ -120,6 +148,14 @@ async function login(){const r=await fetch("/api/login",{method:"POST",body:JSON
  if(!r.ok){$("lmsg").textContent=(A[S.lang]||A.en)[6];return}$("lmsg").textContent="";
  if(location.search.includes("login")){location.href="/update";return}$("loginbox").hidden=true;load()}
 $("lp").onkeydown=e=>{if(e.key=="Enter")login()};
+let wsel="";
+async function scan(){$("nets").textContent="...";const r=await fetch("/api/wifi/scan");const n=await r.json();$("nets").innerHTML="";
+ n.forEach(x=>{const b=document.createElement("button");b.textContent=`${x.ssid} (${x.rssi} dBm)${x.open?"":" \u{1F512}"}`;
+  b.onclick=()=>{wsel=x.ssid;$("w_ssid").textContent=x.ssid;$("wform").hidden=false;$("wp").focus()};$("nets").appendChild(b)})}
+async function joinWifi(){const r=await fetch("/api/wifi",{method:"POST",body:JSON.stringify({ssid:wsel,pass:$("wp").value})});
+ if(r.status==401){$("loginbox").hidden=false;$("msg").textContent=L.auth;return}
+ $("wmsg").textContent=(W[S.lang]||W.en)[5];$("wform").hidden=true;$("nets").innerHTML=""}
+$("wp").onkeydown=e=>{if(e.key=="Enter")joinWifi()};
 $("lang").onchange=e=>save({lang:e.target.value});
 async function search(){const q=$("q").value.trim();if(!q)return;
  const r=await(await fetch(`https://geocoding-api.open-meteo.com/v1/search?count=8&format=json&language=${S.lang.split("-")[0]}&name=${encodeURIComponent(q)}`)).json();

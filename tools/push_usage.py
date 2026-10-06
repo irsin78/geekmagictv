@@ -3,7 +3,7 @@
 
 One run = one collection + one push (launchd runs it every 60 s).
 
-    SMALLTV_HOST=192.168.1.50 python3 tools/push_usage.py   # real data -> device
+    SMALLTV_HOST=192.168.1.50 SMALLTV_TOKEN=... python3 tools/push_usage.py   # real data -> device
     python3 tools/push_usage.py --host 192.168.1.50 --mock  # fake data -> device (display test)
     python3 tools/push_usage.py --print                     # collect and print the payload, don't push
 
@@ -460,9 +460,12 @@ def save_cache(cache):
 
 
 def push_token():
-    m = re.search(r'#define PUSH_TOKEN "([^"]+)"', SECRETS.read_text())
+    """SMALLTV_TOKEN (shown on the device's web page), else PUSH_TOKEN from your own build's secrets.h."""
+    if os.environ.get("SMALLTV_TOKEN"):
+        return os.environ["SMALLTV_TOKEN"]
+    m = SECRETS.exists() and re.search(r'#define PUSH_TOKEN "([^"]+)"', SECRETS.read_text())
     if not m:
-        sys.exit(f"PUSH_TOKEN not found in {SECRETS}")
+        sys.exit("set SMALLTV_TOKEN to the push token shown on the device's web page")
     return m.group(1)
 
 

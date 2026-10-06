@@ -31,11 +31,18 @@ struct Settings {
   char city[48];      // weather place shown on the web page (UTF-8)
   float lat, lon;     // weather place, read by the Mac's collector
   char adminPass[33]; // optional admin password, "" = protection off
+  char wifiSsid[33];  // Wi-Fi set on the web page ("" = use the one compiled in, if any)
+  char wifiPass[65];
+  char pushToken[25]; // generated on first boot; used when the build has no PUSH_TOKEN
 };
 
 extern Settings settings;
 void settingsLoad();
 void settingsRegister();
+const char *wifiSsid();  // web-page Wi-Fi, else the compiled-in one
+const char *wifiPass();
+bool wifiConfigured();   // false: the device runs the open setup access point
+const char *pushToken(); // bearer token expected on POST /api/usage
 bool passwordOk();   // true when no admin password is set or this request is logged in
 bool requireAuth();  // passwordOk(), else answers 401 {"error":"login"}
 
