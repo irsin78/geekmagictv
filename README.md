@@ -8,21 +8,23 @@ limit is left, a countdown to the next reset, a clock and the weather, with litt
 
 ```
 ┌──────────────────────────┐
-│ ☀ 19°   3:31 PM          │  clock + weather (or "Login required" when the Mac is offline)
+│ *  19°   3:31 PM         │
 │          10/6 Tue        │
 ├──────────────────────────┤
-│ 🦀 Claude            Max │  remaining quota per window, in the service's colour,
-│ 5h [████████ 2h 5m ] 92% │  with a countdown to the reset
+│ [Clawd] Claude       Max │
+│ 5h [████████ 2h 5m ] 92% │
 │ 7d [█████    4d 3h ] 62% │
 ├──────────────────────────┤
-│ 🤖 Codex             Pro │
+│ [robot] Codex        Pro │
 │ 7d [████████ 3d 8h ] 71% │
 ├──────────────────────────┤
-│ ✦ Antigravity            │
-│ 7d [██████████ 7d  ]100% │
+│ [star]  Antigravity      │
+│ 7d [██████████  7d ]100% │
 └──────────────────────────┘
 ```
 
+- Top row: weather and a 12-hour clock, or **Login required** while the Mac is offline.
+- One panel per service, in its own colour, with an animated mascot.
 - Bars and percentages show what is **left**; stale numbers turn grey and show their age.
 - The reset countdown and the web page come in 19 languages: Korean, English, Japanese, Chinese
   (Simplified/Traditional), Spanish, Portuguese, French, German, Italian, Russian, Ukrainian, Polish,
@@ -37,15 +39,13 @@ limit is left, a countdown to the next reset, a clock and the weather, with litt
 ## How it works
 
 ```
- Mac (always on)                                     SmallTV (ESP8266)
- ┌──────────────────────────────────┐   HTTP POST    ┌──────────────────────┐
- │ tools/push_usage.py  (launchd,   │ ─────────────▶ │ firmware/usagebar    │
- │ every 60 s)                      │  /api/usage    │ draws the screen,    │
- │  claude -p /usage   (no model    │                │ serves the web page  │
- │  codex token → usage endpoint    │ ◀───────────── │ (/ , /api/settings)  │
- │  agy -p /usage       call, $0)   │  weather place │                      │
- │  Open-Meteo weather              │                └──────────────────────┘
- └──────────────────────────────────┘
+Mac (always on)                       SmallTV (ESP8266)
+tools/push_usage.py, launchd, 60 s    firmware/usagebar
+
+  claude -p /usage        ─┐
+  codex token → usage API  ├─ POST /api/usage ──▶  draws the screen
+  agy -p /usage           ─┤
+  Open-Meteo weather      ─┘ ◀── weather place ──  web page, /api/settings
 ```
 
 The display never holds any login tokens. The Mac reads usage through the official CLIs, which keep
