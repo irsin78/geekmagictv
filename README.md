@@ -1,3 +1,5 @@
+**English** | [한국어](README.ko.md)
+
 # SmallTV AI usage display
 
 Custom firmware that turns a **GeekMagic SmallTV** (ESP8266, 240×240 display) into a desk display
