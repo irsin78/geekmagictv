@@ -4,7 +4,6 @@
 One run = one collection + one push (launchd runs it every 60 s).
 
     SMALLTV_HOST=192.168.1.50 SMALLTV_TOKEN=... python3 tools/push_usage.py   # real data -> device
-    python3 tools/push_usage.py --host 192.168.1.50 --mock  # fake data -> device (display test)
     python3 tools/push_usage.py --print                     # collect and print the payload, don't push
 
 Install it as a launchd agent (every 60 s) with tools/install_launchd.sh.
@@ -13,10 +12,8 @@ Login tokens belong to the CLIs: they are only read here, never printed or writt
 Standard library only, so it runs with the system python3.
 """
 import argparse
-import base64
 import fcntl
 import json
-import math
 import os
 import re
 import shutil
@@ -180,15 +177,6 @@ def first_line(text, n=120):
     return re.sub(r"https?://\S+", "<url>", line)[:n]
 
 
-def jwt_exp(token):
-    try:
-        part = token.split(".")[1]
-        part += "=" * (-len(part) % 4)
-        return int(json.loads(base64.urlsafe_b64decode(part)).get("exp", 0))
-    except Exception:  # noqa: BLE001
-        return 0
-
-
 # ---------- Claude (`claude -p /usage`: local command, no model call; the CLI refreshes its own token) ----------
 
 CLAUDE_LINE = re.compile(r"Current (session|week \(all models\)):\s*(\d+)% used\s*·\s*resets (.+?) \(([^)]+)\)")
@@ -210,23 +198,14 @@ def claude_reset(text, tz):
     return 0
 
 
-PLAN_TTL_S = 86400
-_plan_cache = {}  # bound to the run's cache by collect(), so the keychain is read about once a day
-
-
 def claude_plan():
     """Plan name only (e.g. 'Max') from the CLI's keychain item; the token itself is not used."""
-    cached_plan = _plan_cache.get("_claude_plan") or {}
-    if time.time() - cached_plan.get("at", 0) < PLAN_TTL_S:
-        return cached_plan.get("plan", "")
     try:
         raw = subprocess.run(["security", "find-generic-password", "-s", "Claude Code-credentials", "-w"],
                              capture_output=True, text=True, timeout=10)
-        plan = ((json.loads(raw.stdout).get("claudeAiOauth") or {}).get("subscriptionType") or "").capitalize()
+        return ((json.loads(raw.stdout).get("claudeAiOauth") or {}).get("subscriptionType") or "").capitalize()
     except Exception:  # noqa: BLE001
-        plan = ""
-    _plan_cache["_claude_plan"] = {"plan": plan, "at": int(time.time())}
-    return plan
+        return ""
 
 
 def claude():
@@ -269,9 +248,6 @@ def codex():
         tokens = codex_tokens()
         if not tokens.get("access_token"):
             return provider("codex", "Codex", err="login")
-        if jwt_exp(tokens["access_token"]) < time.time():
-            run_cli("codex", "login", "status")  # give the CLI a chance to refresh, then re-read
-            tokens = codex_tokens()
         data = codex_fetch(tokens)
         rl = data.get("rate_limit") or {}
         wins = []
@@ -333,18 +309,6 @@ def antigravity():
 
 
 # ---------- mock / push ----------
-
-def mock():
-    now = int(time.time())
-    t = now / 600.0
-    wave = lambda phase: max(0, min(100, 50 + 45 * math.sin(t + phase)))  # noqa: E731
-    return [
-        provider("claude", "Claude", "Max", windows=[window("5h", wave(0), now + 2 * 3600 + 300),
-                                                      window("7d", wave(1), now + 4 * 86400)]),
-        provider("codex", "Codex", "Pro", windows=[window("7d", wave(3), now + 6 * 86400 + 3600)]),
-        provider("antigravity", "Antigravity", windows=[window("7d", wave(4), now + 3 * 86400)]),
-    ]
-
 
 # ---------- weather (Open-Meteo, no API key) ----------
 
@@ -421,8 +385,6 @@ OFFLINE_AFTER_FAILS = 2  # one slow captive-portal probe is not an outage
 
 def collect(cache, now, host):
     """Returns (net_state, net_since, providers, weather, tz_off) and updates the cache in place."""
-    _plan_cache.clear()
-    _plan_cache.update({"_claude_plan": cache.get("_claude_plan") or {}})
     net = cache.get("_net") or {"state": "ok", "since": 0, "fails": 0}
     cached_view = lambda: [(cache.get(pid) or {}).get("shown") or (cache.get(pid) or {}).get("data")  # noqa: E731
                            or provider(pid, name, err="offline") for pid, name in NAMES.items()]
@@ -445,7 +407,6 @@ def collect(cache, now, host):
             net = {**net, "fails": fails, "first_fail": net.get("first_fail", now)}
         providers = cached_view()  # never query services while the probe fails
     cache["_net"] = net
-    cache["_claude_plan"] = _plan_cache.get("_claude_plan") or {}
     if net["state"] == "ok" and not net.get("fails"):
         weather(cache, now, device_place(host, cache))
     wx_entry = cache.get("_wx") or {}
@@ -482,26 +443,21 @@ def push(host, payload):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--host", default=os.environ.get("SMALLTV_HOST"), help="display IP (or set SMALLTV_HOST)")
-    ap.add_argument("--mock", action="store_true", help="send fake data")
     ap.add_argument("--print", action="store_true", help="print payload instead of pushing")
     args = ap.parse_args()
     if not args.host and not args.print:
         ap.error("set the display's address with --host or SMALLTV_HOST")
 
-    net, net_since, wx, tz_off = "ok", 0, None, None
-    if args.mock:
-        providers = mock()
-    else:
-        lock = open(CACHE.with_suffix(".lock"), "w")
-        try:  # a manual run and the launchd run must not interleave
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except OSError:
-            log("another run is in progress, skipping")
-            return
-        cache = load_cache()
-        net, net_since, providers, wx, tz_off = collect(cache, int(time.time()), args.host)
-        if not args.print:
-            save_cache(cache)
+    lock = open(CACHE.with_suffix(".lock"), "w")
+    try:  # a manual run and the launchd run must not interleave
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError:
+        log("another run is in progress, skipping")
+        return
+    cache = load_cache()
+    net, net_since, providers, wx, tz_off = collect(cache, int(time.time()), args.host)
+    if not args.print:
+        save_cache(cache)
     payload = {"ts": int(time.time()), "net": net, "net_since": net_since, "p": providers}
     if wx:
         payload["wx"] = wx

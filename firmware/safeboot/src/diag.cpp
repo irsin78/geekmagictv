@@ -1,9 +1,6 @@
 // System info, benchmarks, input probing, event log, crash guard.
 
 #include <ESP8266WiFi.h>
-#ifdef DIAG_TLS
-#include <WiFiClientSecure.h>
-#endif
 #include <stdarg.h>
 
 #include "diag.h"
@@ -182,16 +179,6 @@ static void handleBenchCpu() {
   j.send();
 }
 
-// GET /api/cpu?mhz=80|160  switch the CPU clock (not persisted across reboot).
-static void handleCpuFreq() {
-  uint8_t mhz = server.arg("mhz").toInt() == 160 ? SYS_CPU_160MHZ : SYS_CPU_80MHZ;
-  guardBegin("cpu_freq");
-  bool ok = mhz == ESP.getCpuFreqMHz() || system_update_cpu_freq(mhz);
-  guardEnd();
-  Json j;
-  j.flag("ok", ok).num("cpu_mhz", ESP.getCpuFreqMHz()).send();
-}
-
 static void handleBenchMem() {
   guardBegin("bench_mem");
   Json j;
@@ -262,46 +249,6 @@ static void handleSinkUpload() {
   else if (u.status == UPLOAD_FILE_WRITE) sinkBytes += u.currentSize;
   else if (u.status == UPLOAD_FILE_END) sinkUs = micros() - sinkStart;
 }
-
-#ifdef DIAG_TLS
-// GET /api/bench/tls?host=example.com[&small=1] -> HTTPS handshake cost
-static void handleTls() {
-  String host = server.hasArg("host") ? server.arg("host") : String("www.google.com");
-  bool small = server.hasArg("small");
-  guardBegin("bench_tls");
-  uint32_t heap0 = ESP.getFreeHeap();
-  Json j;
-  j.str("host", host).flag("small_buffers", small).num("heap_before", heap0);
-  {
-    BearSSL::WiFiClientSecure c;
-    c.setInsecure();  // measuring cost only; no certificate validation
-    if (small) c.setBufferSizes(4096, 512);
-    uint32_t t = millis();
-    bool ok = c.connect(host.c_str(), 443);
-    j.flag("connected", ok).num("handshake_ms", millis() - t)
-        .num("heap_connected", ESP.getFreeHeap()).num("heap_max_block", ESP.getMaxFreeBlockSize());
-    if (ok) {
-      c.print(String("GET / HTTP/1.1\r\nHost: ") + host + "\r\nConnection: close\r\n\r\n");
-      uint32_t t0 = millis(), first = 0, bytes = 0;
-      uint8_t b[512];
-      while ((c.connected() || c.available()) && millis() - t0 < 8000 && bytes < 65536) {
-        int n = c.read(b, sizeof(b));
-        if (n > 0) { if (!bytes) first = millis() - t0; bytes += n; }
-        else delay(2);
-      }
-      j.num("ttfb_ms", first).num("bytes", bytes).num("read_ms", millis() - t0);
-    } else {
-      char err[64];
-      c.getLastSSLError(err, sizeof(err));
-      j.str("error", err);
-    }
-    c.stop();
-  }
-  j.num("heap_after", ESP.getFreeHeap());
-  guardEnd();
-  j.send();
-}
-#endif
 
 // ---------- Wi-Fi scan ----------
 
@@ -379,16 +326,10 @@ void diagRegister() {
   server.on("/api/info", HTTP_GET, handleInfo);
   server.on("/api/log", HTTP_GET, handleLog);
   server.on("/api/bench/cpu", HTTP_GET, handleBenchCpu);
-  server.on("/api/cpu", HTTP_GET, handleCpuFreq);
   server.on("/api/bench/mem", HTTP_GET, handleBenchMem);
   server.on("/api/bench/flash", HTTP_GET, handleBenchFlash);
   server.on("/api/bench/zero", HTTP_GET, handleZero);
   server.on("/api/bench/sink", HTTP_POST, handleSinkDone, handleSinkUpload);
-#ifdef DIAG_TLS
-  server.on("/api/bench/tls", HTTP_GET, handleTls);
-#else
-  server.on("/api/bench/tls", HTTP_GET, [] { server.send(501, F("text/plain"), F("TLS bench not in this build (DIAG_TLS)")); });
-#endif
   server.on("/api/wifi/scan", HTTP_GET, handleScan);
   server.on("/api/inputs", HTTP_GET, handleInputs);
   server.on("/api/reboot", HTTP_POST, handleReboot);

@@ -105,7 +105,7 @@ void setup() {
   configTime("KST-9", "pool.ntp.org", "time.google.com");
 
   updater.setup(&server, "/update");  // protected only when an admin password is set on the web page
-  server.collectHeaders("Authorization", "Cookie", "X-Password");
+  server.collectHeaders("Authorization", "Cookie");
   server.on("/", HTTP_GET, [] { server.send_P(200, "text/html; charset=utf-8", ROOT_PAGE); });
   server.onNotFound([] {  // captive portal: any URL a phone probes leads to the setup page
     if (apMode) {

@@ -391,32 +391,7 @@ static void handleJpegUpload() {
   }
 }
 
-// GET /api/display/stockinit?color=0xF800  re-run the panel init and fill one colour
-static void handleStockInit() {
-  uint16_t color = server.hasArg("color") ? strtoul(server.arg("color").c_str(), nullptr, 0) : 0xF800;
-  displayBoot();
-  uint32_t t = micros();
-  tft.fillScreen(color);
-  Json j;
-  j.str("color", "0x" + String(color, HEX)).num("fill_us", micros() - t).send();
-}
-
-// GET /api/display/blink?n=10  toggle the backlight pin every 500ms (ends ON = LOW)
-static void handleBlink() {
-  int n = constrain(server.arg("n").toInt(), 2, 20);
-  pinMode(PIN_BACKLIGHT, OUTPUT);
-  for (int i = 0; i < n; i++) {
-    digitalWrite(PIN_BACKLIGHT, i & 1 ? LOW : HIGH);
-    delay(500);
-  }
-  digitalWrite(PIN_BACKLIGHT, LOW);
-  Json j;
-  j.num("toggles", n).send();
-}
-
 void displayRegister() {
-  server.on("/api/display/stockinit", HTTP_GET, handleStockInit);
-  server.on("/api/display/blink", HTTP_GET, handleBlink);
   server.on("/api/display/init", HTTP_GET, handleInit);
   server.on("/api/display/pattern", HTTP_GET, handlePattern);
   server.on("/api/display/cfg", HTTP_GET, handleCfg);

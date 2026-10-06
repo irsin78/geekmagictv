@@ -107,7 +107,7 @@ static const int ROW_H = 26;   // one usage window row
 
 static int panelHeight(const UsageProvider &p) { return NAME_H + max<int>(1, p.windows) * ROW_H; }
 
-// ---------- baked pixel-font glyphs (digits, units of every language) with font 2 fallback ----------
+// ---------- baked pixel-font glyphs (digits, units of every language) ----------
 
 static const Glyph *findGlyph(uint16_t cp) {
   for (uint8_t i = 0; i < GLYPH_COUNT; i++)
@@ -134,31 +134,23 @@ static uint16_t nextCp(const uint8_t *&p) {
   return 0;
 }
 
-// Draws UTF-8 text top-left at (x, y). Characters with a baked glyph use it; any other
-// ASCII falls back to TFT_eSPI font 2. Returns the end x.
-static int drawMixed(TFT_eSPI &g, const char *s, int x, int y, uint16_t color) {
-  g.setTextDatum(TL_DATUM);
-  g.setTextColor(color);
+// Draws UTF-8 text top-left at (x, y) from the baked glyphs (glyphs.h covers every countdown string).
+static void drawGlyphs(TFT_eSPI &g, const char *s, int x, int y, uint16_t color) {
   const uint8_t *p = (const uint8_t *)s;
   while (uint16_t cp = nextCp(p)) {
     if (const Glyph *gl = findGlyph(cp)) {
       g.drawBitmap(x, y, gl->bits, gl->width, GLYPH_HEIGHT, color);
       x += gl->width;
-    } else if (cp < 0x80) {
-      char c[2] = {(char)cp, 0};
-      g.drawString(c, x, y, 2);
-      x += g.textWidth(c, 2);
     }
   }
-  return x;
 }
 
 // White text with a 1px black outline: readable on the white Codex bar and the dark track alike.
-static void outlinedMixed(TFT_eSPI &g, const char *s, int x, int y) {
+static void outlinedGlyphs(TFT_eSPI &g, const char *s, int x, int y) {
   for (int dx = -1; dx <= 1; dx++)
     for (int dy = -1; dy <= 1; dy++)
-      if (dx || dy) drawMixed(g, s, x + dx, y + dy, TFT_BLACK);
-  drawMixed(g, s, x, y, TFT_WHITE);
+      if (dx || dy) drawGlyphs(g, s, x + dx, y + dy, TFT_BLACK);
+  drawGlyphs(g, s, x, y, TFT_WHITE);
 }
 
 // Static 28x28 weather icon at (x, y). Returns false when the name is unknown.
@@ -420,7 +412,7 @@ static void drawPanel(TFT_eSPI &g, int y0, const UsageProvider &p, uint32_t now,
     if (x.resetAt && now && !resetSinceFetch) {
       char t[32];
       fmtLeft(t, sizeof(t), (long)x.resetAt - (long)now);
-      outlinedMixed(g, t, bx + 6, by + 3);
+      outlinedGlyphs(g, t, bx + 6, by + 3);
     }
 
     char pct[8];

@@ -68,7 +68,6 @@ struct UsageState {
   bool have;
   uint32_t generatedAt;  // unix seconds from the pusher
   uint32_t receivedMs;   // millis() when received
-  uint32_t seq;          // bumps on every accepted push
   char net[8];           // Mac's internet: "ok" or "login" (network login expired)
   uint32_t netSince;     // unix time the internet went away, 0 = unknown
   char wxIcon[16];       // weather icon name ("clear_day", "rain", ...), "" = none

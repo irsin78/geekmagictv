@@ -9,15 +9,10 @@
 //   GET  /flash.bin   full raw flash image (auth)
 //   GET  /flash?offset=<n>&len=<n>   raw flash range (auth)
 //   GET/POST /update  firmware upload (auth)
-// Plus ArduinoOTA on port 8266 (password = ADMIN_PASS).
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPUpdateServer.h>
-#ifndef SAFEBOOT_LEAN
-#include <ESP8266mDNS.h>
-#include <ArduinoOTA.h>
-#endif
 
 #include "diag.h"
 #include "page.h"
@@ -142,12 +137,6 @@ void setup() {
 
   connectWifi();
 
-#ifndef SAFEBOOT_LEAN  // lean builds keep only HTTP /update for recovery
-  MDNS.begin(HOSTNAME);
-  ArduinoOTA.setHostname(HOSTNAME);
-  if (ADMIN_PASS[0]) ArduinoOTA.setPassword(ADMIN_PASS);
-  ArduinoOTA.begin();
-#endif
 
   updater.setup(&server, "/update", ADMIN_USER, ADMIN_PASS);
   server.on("/", HTTP_GET, [] {
@@ -160,9 +149,6 @@ void setup() {
   diagRegister();
   displayRegister();
   server.begin();
-#ifndef SAFEBOOT_LEAN
-  MDNS.addService("http", "tcp", 80);
-#endif
   logf("OTA + web ready");
 
   // Last: the display. If a previous boot died in a display task, skip it this time.
@@ -175,10 +161,6 @@ void setup() {
 
 void loop() {
   server.handleClient();
-#ifndef SAFEBOOT_LEAN
-  ArduinoOTA.handle();
-  MDNS.update();
-#endif
   diagLoop();
 
   // In AP fallback, keep retrying the home network in the background.

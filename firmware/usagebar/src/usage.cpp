@@ -92,11 +92,10 @@ static void handlePush() {
   next.have = true;
   next.receivedMs = millis();
   if (doc["tz_off"].is<long>()) applyTz(doc["tz_off"].as<long>());
-  next.seq = usage.seq + 1;
   usage = next;
   displayRequestRedraw();
   logf("usage push: %u providers", usage.count);
-  server.send(200, F("application/json"), String("{\"ok\":true,\"seq\":") + usage.seq + "}");
+  server.send(200, F("application/json"), F("{\"ok\":true}"));
 }
 
 static void handleGet() {

@@ -10,7 +10,7 @@
 //   POST /api/logout
 //
 // The admin password protects settings, Wi-Fi, reboot and /update. It is off until one is set on the
-// web page. Sessions live in RAM: a reboot logs everyone out. Scripts may send "X-Password" instead.
+// web page. Sessions live in RAM: a reboot logs everyone out.
 // "token" (the push token for tools/push_usage.py) is only returned to an authorised request.
 
 #include <ArduinoJson.h>
@@ -20,26 +20,9 @@
 #include "common.h"
 #include "config.h"
 
-static const uint32_t MAGIC_V1 = 0x55534231;  // "USB1": {magic, backlight}
-static const uint32_t MAGIC_V2 = 0x55534232;  // "USB2": SettingsV2
-static const uint32_t MAGIC_V3 = 0x55534233;  // "USB3": SettingsV3
-static const uint32_t MAGIC_V4 = 0x55534234;  // "USB4": Settings (V3 + Wi-Fi + push token)
+static const uint32_t MAGIC = 0x55534234;  // "USB4"; anything else in EEPROM -> defaults
 
-struct SettingsV2 {
-  uint32_t magic;
-  uint8_t backlight, lang;
-  char city[48];
-  float lat, lon;
-};
-struct SettingsV3 {
-  uint32_t magic;
-  uint8_t backlight, lang;
-  char city[48];
-  float lat, lon;
-  char adminPass[33];
-};
-
-Settings settings{MAGIC_V4, 100, LANG_KO, "Seoul", 37.5665f, 126.9780f, "", "", "", ""};
+Settings settings{MAGIC, 100, LANG_KO, "Seoul", 37.5665f, 126.9780f, "", "", "", ""};
 
 static const char *const LANG_CODES[LANG_COUNT] = {"ko", "en", "ja", "zh", "es", "pt", "fr", "de", "it", "zh-TW",
                                                    "ru", "uk", "pl", "nl", "tr", "vi", "id", "th", "ar"};
@@ -50,53 +33,21 @@ static void settingsSave() {
   EEPROM.commit();
 }
 
-static void copyV3(const SettingsV3 &v3) {
-  settings.backlight = v3.backlight;
-  settings.lang = v3.lang;
-  memcpy(settings.city, v3.city, sizeof(settings.city));
-  settings.lat = v3.lat;
-  settings.lon = v3.lon;
-  memcpy(settings.adminPass, v3.adminPass, sizeof(settings.adminPass));
-}
-
 void settingsLoad() {
   EEPROM.begin(sizeof(Settings));
-  uint32_t magic;
-  EEPROM.get(0, magic);
-  if (magic == MAGIC_V4) {
-    EEPROM.get(0, settings);
-  } else if (magic == MAGIC_V3) {  // 2.5: no Wi-Fi / token yet
-    SettingsV3 v3;
-    EEPROM.get(0, v3);
-    copyV3(v3);
-  } else if (magic == MAGIC_V2) {  // 2.1-2.4: no password either
-    SettingsV2 v2;
-    EEPROM.get(0, v2);
-    SettingsV3 v3{};
-    v3.backlight = v2.backlight;
-    v3.lang = v2.lang;
-    memcpy(v3.city, v2.city, sizeof(v3.city));
-    v3.lat = v2.lat;
-    v3.lon = v2.lon;
-    copyV3(v3);
-  } else if (magic == MAGIC_V1) {  // 1.x: brightness only
-    uint8_t bl = 100;
-    EEPROM.get(4, bl);
-    settings.backlight = bl;
+  Settings s;
+  EEPROM.get(0, s);
+  if (s.magic == MAGIC && s.backlight <= 100 && s.lang < LANG_COUNT) {
+    s.city[sizeof(s.city) - 1] = 0;
+    s.adminPass[sizeof(s.adminPass) - 1] = 0;
+    s.wifiSsid[sizeof(s.wifiSsid) - 1] = 0;
+    s.wifiPass[sizeof(s.wifiPass) - 1] = 0;
+    s.pushToken[sizeof(s.pushToken) - 1] = 0;
+    settings = s;
   }
-  // Sanitise whatever came from flash.
-  settings.magic = MAGIC_V4;
-  if (settings.backlight > 100) settings.backlight = 100;
-  if (settings.lang >= LANG_COUNT) settings.lang = LANG_KO;
-  settings.city[sizeof(settings.city) - 1] = 0;
-  settings.adminPass[sizeof(settings.adminPass) - 1] = 0;
-  settings.wifiSsid[sizeof(settings.wifiSsid) - 1] = 0;
-  settings.wifiPass[sizeof(settings.wifiPass) - 1] = 0;
-  settings.pushToken[sizeof(settings.pushToken) - 1] = 0;
-  if (!settings.pushToken[0] || magic != MAGIC_V4) {
-    if (!settings.pushToken[0])
-      snprintf(settings.pushToken, sizeof(settings.pushToken), "%08x%08x%08x", ESP.random(), ESP.random(), ESP.random());
-    settingsSave();  // first boot / upgrade: store the new layout once
+  if (!settings.pushToken[0]) {  // first boot: make this device's push token
+    snprintf(settings.pushToken, sizeof(settings.pushToken), "%08x%08x%08x", ESP.random(), ESP.random(), ESP.random());
+    settingsSave();
   }
 }
 
@@ -118,7 +69,6 @@ const char *pushToken() {
 
 bool passwordOk() {
   if (!settings.adminPass[0]) return true;  // protection off
-  if (server.hasHeader("X-Password") && server.header("X-Password") == settings.adminPass) return true;
   return session[0] && server.header("Cookie").indexOf(String("smalltv=") + session) >= 0;
 }
 

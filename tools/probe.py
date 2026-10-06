@@ -73,13 +73,6 @@ def main():
     rep["net_upload"] = post("/api/bench/sink", bytes(262144), "z.bin")
 
     rep["wifi_scan"] = get("/api/wifi/scan")
-    # 501 = firmware built without DIAG_TLS
-    if requests.get(BASE + "/api/bench/tls?host=www.google.com", timeout=60).status_code != 501:
-        rep["tls"] = {
-            f"{h}{'_small' if small else ''}": get(f"/api/bench/tls?host={h}{'&small=1' if small else ''}", timeout=60)
-            for h in ("www.google.com", "api.openweathermap.org", "api.github.com")
-            for small in (False, True)
-        }
     rep["display_bench"] = get("/api/display/bench", timeout=60)
 
     frames = [frame(k) for k in range(3)]

@@ -126,9 +126,8 @@ Back up first: `safeboot` serves the whole 4 MB flash at `/flash.bin`.
 2. Optional: copy `include/secrets.h.example` to `include/secrets.h` in `firmware/usagebar` and
    `firmware/safeboot` to compile in your Wi-Fi (and a `PUSH_TOKEN`, which `push_usage.py` then reads
    without `SMALLTV_TOKEN`). Without it the build behaves like the release (Wi-Fi setup page).
-3. Build with `../../.venv/bin/pio run` in each firmware folder. Use `-e release` for files without
-   secrets, or `-e tls` in `safeboot` for the HTTPS benchmark. Upload `.pio/build/<env>/firmware.bin` at
-   `/update`, then continue from step 4 above.
+3. Build with `../../.venv/bin/pio run` in each firmware folder (`-e release` for files without
+   secrets). Upload `.pio/build/<env>/firmware.bin` at `/update`, then continue from step 4 above.
 
 **Restore the stock firmware:** upload the official image from
 [GeekMagicClock/smalltv](https://github.com/GeekMagicClock/smalltv) (V3.1.4) at `/update`. If the

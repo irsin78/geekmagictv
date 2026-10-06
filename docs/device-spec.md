@@ -69,7 +69,7 @@ Notes:
 
 Wi-Fi during the measurements: −70 dBm, channel 11, 802.11g. A better signal raises the network figures.
 
-## HTTPS (160 MHz, BearSSL, no certificate validation)
+## HTTPS (160 MHz, BearSSL, no certificate validation; measured with an earlier safeboot build)
 
 | Host | Handshake | Free heap while connected (default / small buffers) |
 |---|---|---|

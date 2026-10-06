@@ -20,7 +20,7 @@ p.m{color:var(--mut);margin:4px 0}
 
 <section><h2>System</h2>
 <button onclick="j('/api/info')">Info</button>
-<button onclick="j('/api/bench/cpu')">CPU bench</button><button onclick="j('/api/cpu?mhz=160')">Set 160MHz</button><button onclick="j('/api/cpu?mhz=80')">Set 80MHz</button>
+<button onclick="j('/api/bench/cpu')">CPU bench</button>
 <button onclick="j('/api/bench/mem')">Memory allocation</button>
 <button onclick="j('/api/bench/flash')">Flash read speed</button>
 <button onclick="j('/api/log',1)">Log</button>
@@ -30,13 +30,9 @@ p.m{color:var(--mut);margin:4px 0}
 <button onclick="dl()">Download 1MB (device→PC)</button>
 <button onclick="ul()">Upload 256KB (PC→device)</button>
 <button onclick="j('/api/wifi/scan')">Wi-Fi scan</button>
-<button onclick="j('/api/bench/tls')">HTTPS, default buffers</button>
-<button onclick="j('/api/bench/tls?small=1')">HTTPS, small buffers</button>
 </section>
 
 <section><h2>Display</h2>
-<button onclick="j('/api/display/stockinit')">Re-init panel (red)</button>
-<button onclick="j('/api/display/blink?n=10')">Blink backlight</button>
 <button onclick="j('/api/display/init')">Init</button>
 <button onclick="j('/api/display/pattern?n=status')">Status</button>
 <button onclick="j('/api/display/pattern?n=bars')">Colour bars</button>
