@@ -368,16 +368,28 @@ def weather(cache, now, place):
 
 
 def internet_ok():
-    """True when Apple's captive-portal probe answers normally.
+    """True when Apple's captive-portal probe answers normally and HTTPS gets out.
 
     This Mac's network login expires every 8 hours; until someone logs in again nothing outside
     the hotspot is reachable, so the services are not queried (and the CLIs are not run) meanwhile.
+    The office portal lets the Apple probe through and only breaks HTTPS (its own certificate), so
+    two hosts the collector needs anyway are tried too: any HTTP answer counts, TLS/DNS errors don't.
     """
     try:
         with urllib.request.urlopen("http://captive.apple.com/hotspot-detect.html", timeout=5) as r:
-            return b"Success" in r.read(4096)
+            if b"Success" not in r.read(4096):
+                return False
     except Exception:  # noqa: BLE001 - any failure means "not online"
         return False
+    for url in ("https://chatgpt.com", "https://api.open-meteo.com"):
+        try:
+            urllib.request.urlopen(urllib.request.Request(url, method="HEAD"), timeout=5).close()
+            return True
+        except urllib.error.HTTPError:
+            return True
+        except Exception:  # noqa: BLE001
+            pass
+    return False
 
 
 OFFLINE_AFTER_FAILS = 2  # one slow captive-portal probe is not an outage
