@@ -58,7 +58,7 @@ their own logins. Each service is queried every 5 minutes, and again a minute af
 resets; results are pushed every minute. If the Mac's internet goes away, which on a captive-portal
 network happens when its login expires, the display says **Login required**. The check uses Apple's
 captive-portal probe plus an HTTPS request, because some portals let the probe through and only
-break HTTPS. In that case the collector stops querying and the CLIs are never run,
+break HTTPS. While offline, the collector stops querying and the CLIs are never run,
 so no sign-in browser windows pile up.
 
 ## Hardware facts and limits
