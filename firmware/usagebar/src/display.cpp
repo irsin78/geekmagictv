@@ -397,9 +397,9 @@ static void drawPanel(TFT_eSPI &g, int y0, const UsageProvider &p, uint32_t now,
   for (uint8_t w = 0; w < p.windows; w++) {
     const UsageWindow &x = p.win[w];
     const int ry = y0 + NAME_H + w * ROW_H;
-    // A window that reset after the numbers were fetched holds no valid value any more.
+    // A window that reset after the numbers were fetched is full again until the next push.
     const bool resetSinceFetch = x.resetAt && now >= x.resetAt && p.fetchedAt && p.fetchedAt < x.resetAt;
-    const int left = (x.used < 0 || resetSinceFetch) ? -1 : 100 - x.used;
+    const int left = x.used < 0 ? -1 : resetSinceFetch ? 100 : 100 - x.used;
 
     g.setTextDatum(TL_DATUM);
     g.setTextColor(TFT_LIGHTGREY, TFT_BLACK);
