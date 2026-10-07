@@ -107,7 +107,9 @@ def cached(pid, fetch, cache, now):
     retry = result.pop("_retry", 0)
     if not result["err"]:
         result["at"] = now
-        cache[pid] = {"data": result, "next": now + FETCH_INTERVAL_S.get(pid, 300)}
+        # A window that resets before the next regular query is re-read a minute after its reset.
+        nxt = min([now + FETCH_INTERVAL_S.get(pid, 300)] + [w["r"] + 60 for w in result["w"] if w.get("r", 0) > now])
+        cache[pid] = {"data": result, "next": nxt}
         return result
     reason = "limited" if "429" in result["err"] else result["err"]
     backoff = max(retry, ERROR_BACKOFF_S)
