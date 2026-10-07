@@ -29,7 +29,8 @@ limit is left, a countdown to the next reset, a clock and the weather, with litt
 
 - Top row: weather and a 12-hour clock, or **Login required** while the Mac is offline.
 - One panel per service, in its own colour, with an animated mascot.
-- Bars and percentages show what is **left**; stale numbers turn grey and show their age.
+- Bars and percentages show what is **left**; stale numbers turn grey and show their age. A window
+  that has reset shows 100% until the next numbers arrive.
 - The reset countdown and the web page come in 19 languages: Korean, English, Japanese, Chinese
   (Simplified/Traditional), Spanish, Portuguese, French, German, Italian, Russian, Ukrainian, Polish,
   Dutch, Turkish, Vietnamese, Indonesian, Thai and Arabic. Arabic shows English units on the display.
@@ -53,9 +54,11 @@ tools/push_usage.py, launchd, 60 s    firmware/usagebar
 ```
 
 The display never holds any login tokens. The Mac reads usage through the official CLIs, which keep
-their own logins. Each service is queried at most every 5 minutes, and results are pushed every minute.
-If the Mac's internet goes away, which on a captive-portal network happens when its login expires, the
-display says **Login required**. In that case the collector stops querying and the CLIs are never run,
+their own logins. Each service is queried every 5 minutes, and again a minute after one of its windows
+resets; results are pushed every minute. If the Mac's internet goes away, which on a captive-portal
+network happens when its login expires, the display says **Login required**. The check uses Apple's
+captive-portal probe plus an HTTPS request, because some portals let the probe through and only
+break HTTPS. In that case the collector stops querying and the CLIs are never run,
 so no sign-in browser windows pile up.
 
 ## Hardware facts and limits
@@ -164,8 +167,8 @@ current image is large, upload a smaller one (e.g. `safeboot`) first. See the si
 
 - Usage comes from the services' internal endpoints and CLI commands (the same ones tools like
   CodexBar use), not documented public APIs. They may change.
-- The usage endpoints rate-limit (polling every minute got HTTP 429), so each service is queried at most
-  every 5 minutes and backs off after errors.
+- The usage endpoints rate-limit (polling every minute got HTTP 429), so each service is queried every 5
+  minutes (plus once right after a window resets) and backs off after errors.
 - The mascot and weather pixel art was drawn by the Codex CLI on request (`tools/icons/*.json`).
   Clawd was seeded from Claude Code's welcome-banner block characters.
 
