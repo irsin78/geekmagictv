@@ -18,6 +18,7 @@ limit is left, a countdown to the next reset, a clock and the weather, with litt
 │ [Clawd] Claude       Max │
 │ 5h [████████ 2h 5m ] 92% │
 │ 7d [█████    4d 3h ] 62% │
+│ Fb [███      4d 3h ] 35% │
 ├──────────────────────────┤
 │ [robot] Codex        Pro │
 │ 7d [████████ 3d 8h ] 71% │
@@ -28,7 +29,8 @@ limit is left, a countdown to the next reset, a clock and the weather, with litt
 ```
 
 - Top row: weather and a 12-hour clock, or **Login required** while the Mac is offline.
-- One panel per service, in its own colour, with an animated mascot.
+- One panel per service, in its own colour, with an animated mascot. On a Claude Max plan a third
+  row, `Fb`, shows the weekly Fable limit (the rows get a little shorter so the clock keeps its size).
 - Bars and percentages show what is **left**; stale numbers turn grey and show their age. A window
   that has reset shows 100% until the next numbers arrive.
 - The reset countdown and the web page come in 19 languages: Korean, English, Japanese, Chinese
