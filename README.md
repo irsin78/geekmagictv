@@ -2,9 +2,11 @@
 
 # SmallTV AI usage display
 
-Custom firmware that turns a **GeekMagic SmallTV** (ESP8266, 240×240 display) into a desk display
+Custom firmware that turns a [**GeekMagic SmallTV**](https://github.com/GeekMagicClock/smalltv) (ESP8266, 240×240 display) into a desk display
 for AI coding-assistant quotas: **Claude Code, Codex and Antigravity**. It shows how much of each
 limit is left, a countdown to the next reset, a clock and the weather, with little animated mascots.
+
+<img src="docs/images/device.gif" width="320" alt="The display running on a SmallTV">
 
 ![Animated mascots: Clawd, the Codex robot and the Gemini sparkle](docs/images/mascots.gif)
 

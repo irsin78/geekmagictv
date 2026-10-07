@@ -2,9 +2,11 @@
 
 # SmallTV AI 사용량 표시기
 
-**GeekMagic SmallTV**(ESP8266, 240×240 화면)를 AI 코딩 도구의 사용량 표시기로 바꾸는 커스텀
+[**GeekMagic SmallTV**](https://github.com/GeekMagicClock/smalltv)(ESP8266, 240×240 화면)를 AI 코딩 도구의 사용량 표시기로 바꾸는 커스텀
 펌웨어입니다. **Claude Code, Codex, Antigravity**의 한도가 얼마나 남았는지, 다음 리셋까지 남은 시간,
 시계와 날씨를 작은 캐릭터 애니메이션과 함께 보여줍니다.
+
+<img src="docs/images/device.gif" width="320" alt="SmallTV에서 실행 중인 화면">
 
 ![캐릭터 애니메이션: Clawd, Codex 로봇, 제미니 별](docs/images/mascots.gif)
 
