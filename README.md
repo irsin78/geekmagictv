@@ -10,24 +10,6 @@ limit is left, a countdown to the next reset, a clock and the weather, with litt
 
 ![Animated mascots: Clawd, the Codex robot and the Gemini sparkle](docs/images/mascots.gif)
 
-```
-┌──────────────────────────┐
-│ *  19°   3:31 PM         │
-│          10/6 Tue        │
-├──────────────────────────┤
-│ [Clawd] Claude       Max │
-│ 5h [████████ 2h 5m ] 92% │
-│ 7d [█████    4d 3h ] 62% │
-│ Fb [███      4d 3h ] 35% │
-├──────────────────────────┤
-│ [robot] Codex        Pro │
-│ 7d [████████ 3d 8h ] 71% │
-├──────────────────────────┤
-│ [star]  Antigravity      │
-│ 7d [██████████  7d ]100% │
-└──────────────────────────┘
-```
-
 - Top row: weather and a 12-hour clock, or **Login required** while the Mac is offline.
 - One panel per service, in its own colour, with an animated mascot. On a Claude Max plan a third
   row, `Fb`, shows the weekly Fable limit (the rows get a little shorter so the clock keeps its size).
