@@ -66,7 +66,7 @@ def label_for_seconds(secs, fallback):
 
 
 def provider(pid, name, plan="", err="", windows=()):
-    return {"id": pid, "n": name, "plan": short(plan, 13), "err": short(err), "w": list(windows)[:2], "at": 0}
+    return {"id": pid, "n": name, "plan": short(plan, 13), "err": short(err), "w": list(windows)[:3], "at": 0}
 
 
 # ---------- fetch scheduling ----------
@@ -181,7 +181,7 @@ def first_line(text, n=120):
 
 # ---------- Claude (`claude -p /usage`: local command, no model call; the CLI refreshes its own token) ----------
 
-CLAUDE_LINE = re.compile(r"Current (session|week \(all models\)):\s*(\d+)% used\s*·\s*resets (.+?) \(([^)]+)\)")
+CLAUDE_LINE = re.compile(r"Current (session|week \(all models\)|week \(Fable\)):\s*(\d+)% used\s*·\s*resets (.+?) \(([^)]+)\)")
 
 
 def claude_reset(text, tz):
@@ -217,11 +217,14 @@ def claude():
             return provider("claude", "Claude", err="claude not installed")
         data = json.loads(out[out.find("{"):]) if "{" in out else {}
         text = str(data.get("result") or "")
+        plan = claude_plan()
         wins = []
         for kind, used, reset, tz in CLAUDE_LINE.findall(text):
-            wins.append({"l": "5h" if kind == "session" else "7d", "u": int(used), "r": claude_reset(reset, tz)})
+            label = {"session": "5h", "week (Fable)": "Fb"}.get(kind, "7d")
+            if label != "Fb" or plan == "Max":  # the Fable row only on Max (the screen has room for one more)
+                wins.append({"l": label, "u": int(used), "r": claude_reset(reset, tz)})
         if wins:
-            return provider("claude", "Claude", claude_plan(), windows=wins)
+            return provider("claude", "Claude", plan, windows=wins)
         reason = classify(text + " " + err) or "no usage data"
         log(f"claude: exit {rc}: {first_line(text or err)}")
         return provider("claude", "Claude", err=reason)

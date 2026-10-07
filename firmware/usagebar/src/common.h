@@ -61,7 +61,7 @@ struct UsageProvider {
   char error[32];     // failure reason while the numbers below are the last good ones
   uint32_t fetchedAt;  // unix time of the last successful fetch, 0 = unknown
   uint8_t windows;
-  UsageWindow win[2];
+  UsageWindow win[3];  // Claude Max: 5h, 7d, Fable 7d
 };
 
 struct UsageState {

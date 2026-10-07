@@ -102,8 +102,11 @@ static void fmtLeft(char *out, size_t n, long secs) {
 
 // ---------- drawing ----------
 
-static const int NAME_H = 27;  // provider name row
-static const int ROW_H = 26;   // one usage window row
+// Row heights: normal, or compact when the panels would leave the clock less than the 52px it needs
+// (Claude Max shows a third row). Chosen in drawAll() before anything is drawn.
+static int NAME_H = 27;  // provider name row
+static int ROW_H = 26;   // one usage window row
+static int BAR_H = 22;
 
 static int panelHeight(const UsageProvider &p) { return NAME_H + max<int>(1, p.windows) * ROW_H; }
 
@@ -405,14 +408,14 @@ static void drawPanel(TFT_eSPI &g, int y0, const UsageProvider &p, uint32_t now,
     g.setTextColor(TFT_LIGHTGREY, TFT_BLACK);
     g.drawString(x.label, 4, ry + 4, 2);
 
-    const int bx = 36, bw = 136, bh = 22, by = ry;
+    const int bx = 36, bw = 136, bh = BAR_H, by = ry;
     g.fillRoundRect(bx, by, bw, bh, 4, tft.color565(50, 50, 50));
     if (left > 0) g.fillRoundRect(bx, by, max(8, left * bw / 100), bh, 4, stale ? dim : accent);
 
     if (x.resetAt && now && !resetSinceFetch) {
       char t[32];
       fmtLeft(t, sizeof(t), (long)x.resetAt - (long)now);
-      outlinedGlyphs(g, t, bx + 6, by + 3);
+      outlinedGlyphs(g, t, bx + 6, by + (bh - GLYPH_HEIGHT) / 2);
     }
 
     char pct[8];
@@ -457,8 +460,17 @@ static void drawAll() {
   if (!usage.have) {
     drawWaiting();
   } else {
-    int panelsH = 0;
-    for (uint8_t i = 0; i < usage.count; i++) panelsH += panelHeight(usage.p[i]);
+    int rows = 0;
+    for (uint8_t i = 0; i < usage.count; i++) rows += max<int>(1, usage.p[i].windows);
+    const bool compact = 240 - (usage.count * 27 + rows * 26) < 52;
+    NAME_H = compact ? 24 : 27;
+    ROW_H = compact ? 23 : 26;
+    BAR_H = compact ? 20 : 22;
+    int panelsH = 0, tallest = 0;
+    for (uint8_t i = 0; i < usage.count; i++) {
+      panelsH += panelHeight(usage.p[i]);
+      tallest = max(tallest, panelHeight(usage.p[i]));
+    }
     int y = max(0, 240 - panelsH);  // panels sit at the bottom, the clock takes the rest
     if (!strcmp(usage.net, "login")) drawNetBanner(y);
     else drawClock(y);
@@ -467,7 +479,7 @@ static void drawAll() {
     uint32_t pushAgeS = (millis() - usage.receivedMs) / 1000;
     TFT_eSprite spr(&tft);
     spr.setColorDepth(8);
-    bool useSprite = spr.createSprite(240, NAME_H + 2 * ROW_H) != nullptr;
+    bool useSprite = spr.createSprite(240, tallest) != nullptr;
     for (uint8_t i = 0; i < usage.count && y < 240; i++) {
       bool last = i == usage.count - 1;
       IconSlot &slot = slots[i];

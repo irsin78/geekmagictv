@@ -80,7 +80,7 @@ static void handlePush() {
     strlcpy(p.error, src["err"] | "", sizeof(p.error));
     p.fetchedAt = src["at"] | 0u;
     for (JsonObject w : src["w"].as<JsonArray>()) {
-      if (p.windows >= 2) break;
+      if (p.windows >= 3) break;
       UsageWindow &x = p.win[p.windows++];
       strlcpy(x.label, w["l"] | "", sizeof(x.label));
       x.used = w["u"].isNull() ? -1 : (int8_t)constrain((int)lroundf(w["u"].as<float>()), 0, 100);
