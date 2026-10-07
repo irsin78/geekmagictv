@@ -6,7 +6,7 @@ Custom firmware that turns a [**GeekMagic SmallTV**](https://github.com/GeekMagi
 for AI coding-assistant quotas: **Claude Code, Codex and Antigravity**. It shows how much of each
 limit is left, a countdown to the next reset, a clock and the weather, with little animated mascots.
 
-<img src="docs/images/device.gif" width="320" alt="The display running on a SmallTV">
+<img src="docs/images/device.gif" width="320" alt="The display running on a SmallTV"> <img src="docs/images/screen.png" width="320" alt="Screen of usagebar 2.7.0 on a Claude Max plan">
 
 ![Animated mascots: Clawd, the Codex robot and the Gemini sparkle](docs/images/mascots.gif)
 

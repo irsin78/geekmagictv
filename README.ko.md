@@ -6,7 +6,7 @@
 펌웨어입니다. **Claude Code, Codex, Antigravity**의 한도가 얼마나 남았는지, 다음 리셋까지 남은 시간,
 시계와 날씨를 작은 캐릭터 애니메이션과 함께 보여줍니다.
 
-<img src="docs/images/device.gif" width="320" alt="SmallTV에서 실행 중인 화면">
+<img src="docs/images/device.gif" width="320" alt="SmallTV에서 실행 중인 화면"> <img src="docs/images/screen.png" width="320" alt="usagebar 2.7.0 화면 (Claude Max 요금제)">
 
 ![캐릭터 애니메이션: Clawd, Codex 로봇, 제미니 별](docs/images/mascots.gif)
 
